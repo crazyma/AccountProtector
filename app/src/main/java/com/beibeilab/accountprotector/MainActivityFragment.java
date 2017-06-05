@@ -49,6 +49,12 @@ public class MainActivityFragment extends Fragment {
         for(int i=0;i<15;i++){
             MainItemViewModel mainItemViewModel = new MainItemViewModel();
             mainItemViewModel.setTextName("item " + i);
+            if(i%3 == 0){
+                mainItemViewModel.setResOauthIcon(R.drawable.facebook);
+            }
+            if(i%7 == 0){
+                mainItemViewModel.setResOauthIcon(R.drawable.github);
+            }
             mainItemViewModelList.add(mainItemViewModel);
         }
 

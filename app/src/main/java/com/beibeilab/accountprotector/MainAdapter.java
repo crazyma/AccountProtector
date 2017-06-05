@@ -50,7 +50,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemBindingHol
     @Override
     public void onBindViewHolder(ItemBindingHolder holder, int position) {
         MainItemViewModel mainItemViewModel = mItemModelList.get(position);
-        holder.getBinding().setVariable(com.beibeilab.accountprotector.BR.itemModel, mainItemViewModel);
+        holder.getBinding().setVariable(BR.itemModel, mainItemViewModel);
         holder.getBinding().executePendingBindings();
     }
 

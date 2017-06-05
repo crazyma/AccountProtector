@@ -1,6 +1,12 @@
 package com.beibeilab.accountprotector.viewmodel;
 
+import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.beibeilab.accountprotector.util.Util;
 
 /**
  * Created by david on 2017/5/29.
@@ -8,7 +14,8 @@ import android.graphics.drawable.Drawable;
 
 public class MainItemViewModel {
     private String textName;
-    private Drawable drawableIcon, drawableOauthIcon;
+    private Drawable drawableIcon;
+    private int resOauthIcon;
 
     public String getTextName() {
         return textName;
@@ -26,11 +33,27 @@ public class MainItemViewModel {
         this.drawableIcon = drawableIcon;
     }
 
-    public Drawable getDrawableOauthIcon() {
-        return drawableOauthIcon;
+    public int getResOauthIcon() {
+        return resOauthIcon;
     }
 
-    public void setDrawableOauthIcon(Drawable drawableOauthIcon) {
-        this.drawableOauthIcon = drawableOauthIcon;
+    public void setResOauthIcon(int resOauthIcon) {
+        this.resOauthIcon = resOauthIcon;
+    }
+
+    @BindingAdapter({"ovalColor"})
+    public static void setOvalBackground(ImageView imageView, int color){
+        Drawable drawable = Util.createOvalDrawable(color, imageView.getLayoutParams().width);
+        imageView.setBackground(drawable);
+    }
+
+    @BindingAdapter({"oauthIcon"})
+    public static void setOauthIcon(ImageView imageView, int resId){
+        if(resId == 0){
+            imageView.setVisibility(View.GONE);
+        }else{
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(resId);
+        }
     }
 }
