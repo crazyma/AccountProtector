@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.beibeilab.accountprotector.databinding.MainItemBinding;
-import com.beibeilab.accountprotector.model.MainItemModel;
+import com.beibeilab.accountprotector.viewmodel.MainItemViewModel;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemBindingHol
         }
     }
 
-    private List<MainItemModel> mItemModelList;
+    private List<MainItemViewModel> mItemModelList;
 
     @Override
     public ItemBindingHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -49,8 +49,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemBindingHol
 
     @Override
     public void onBindViewHolder(ItemBindingHolder holder, int position) {
-        MainItemModel mainItemModel = mItemModelList.get(position);
-        holder.getBinding().setVariable(com.beibeilab.accountprotector.BR.itemModel, mainItemModel);
+        MainItemViewModel mainItemViewModel = mItemModelList.get(position);
+        holder.getBinding().setVariable(com.beibeilab.accountprotector.BR.itemModel, mainItemViewModel);
         holder.getBinding().executePendingBindings();
     }
 
@@ -61,7 +61,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemBindingHol
         return 0;
     }
 
-    public void setMainItemModelList(List<MainItemModel> itemModelList) {
+    public void setMainItemModelList(List<MainItemViewModel> itemModelList) {
         this.mItemModelList = itemModelList;
     }
 }

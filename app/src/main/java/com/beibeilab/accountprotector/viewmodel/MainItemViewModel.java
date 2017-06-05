@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.model;
+package com.beibeilab.accountprotector.viewmodel;
 
 import android.graphics.drawable.Drawable;
 
@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
  * Created by david on 2017/5/29.
  */
 
-public class MainItemModel {
+public class MainItemViewModel {
     private String textName;
     private Drawable drawableIcon, drawableOauthIcon;
 
