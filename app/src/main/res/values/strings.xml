@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">AccountProtector</string>
     <string name="action_settings">Settings</string>
+    <string name="fragemnt_title_account_name">服務名稱</string>
+    <string name="hint_account">Account</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_user_name">User Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_remark">Remark</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

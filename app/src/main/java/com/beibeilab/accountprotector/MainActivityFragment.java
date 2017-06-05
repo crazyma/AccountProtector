@@ -47,7 +47,7 @@ public class MainActivityFragment extends Fragment {
 
         List<MainItemModel> mainItemModelList = new ArrayList<>();
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<15;i++){
             MainItemModel mainItemModel= new MainItemModel();
             mainItemModel.setTextName("item " + i);
             mainItemModelList.add(mainItemModel);

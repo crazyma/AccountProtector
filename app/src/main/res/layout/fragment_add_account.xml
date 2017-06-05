@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/fragemnt_title_account_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_edit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <View
+            android:id="@+id/view_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+        <View
+            android:id="@+id/view_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_google" />
+
+        <ImageView
+            android:id="@+id/image_github"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/image_twitter"
+            app:layout_constraintTop_toTopOf="@+id/image_google"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/image_twitter"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/image_github"
+            app:layout_constraintStart_toEndOf="@+id/image_facebook"
+            app:layout_constraintTop_toTopOf="@+id/image_google"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/image_facebook"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/image_twitter"
+            app:layout_constraintStart_toEndOf="@+id/image_google"
+            app:layout_constraintTop_toTopOf="@+id/image_google"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/image_google"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/image_facebook"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider1"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="80dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="330dp" />
+
+        <ImageView
+            android:id="@+id/image_account"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider2"
+            app:srcCompat="@mipmap/ic_launcher"
+            tools:layout_editor_absoluteY="289dp"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/image_password"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintStart_toStartOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/image_account"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/image_user_name"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintStart_toStartOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/image_password"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/image_email"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintStart_toStartOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/image_user_name"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/image_remark"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintStart_toStartOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/image_email"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginTop="8dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_account"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="80dp"
+            app:layout_constraintTop_toTopOf="@+id/image_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider2">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_account" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_password"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="80dp"
+            app:layout_constraintTop_toTopOf="@+id/image_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="80dp"
+            app:layout_constraintTop_toTopOf="@+id/image_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_user_name" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_email"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="80dp"
+            app:layout_constraintTop_toTopOf="@+id/image_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_remark"
+            android:layout_width="match_parent"
+            android:layout_height="56sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="80dp"
+            app:layout_constraintTop_toTopOf="@+id/image_remark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_remark" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"
+            android:text="MAKE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_input_password" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>
