@@ -1,15 +1,17 @@
 package com.beibeilab.accountprotector;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.beibeilab.accountprotector.databinding.MainFragmentBinding;
 import com.beibeilab.accountprotector.viewmodel.MainItemViewModel;
+import com.beibeilab.accountprotector.viewmodel.MainListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,9 @@ import java.util.List;
  */
 public class MainActivityFragment extends Fragment {
 
-    private MainAdapter mMainAdapter;
+    private MainFragmentBinding mBinding;
+    private MainListViewModel viewModel;
+
     private RecyclerView mRecyclerView;
 
     public MainActivityFragment() {
@@ -28,40 +32,60 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+
+        viewModel = new MainListViewModel();
+        viewModel.setItemBindingResId(BR.itemModel);
+
+        List<MainItemViewModel> mainItemViewModelList = new ArrayList<>();
+
+        viewModel.setMainItemViewModelList(mainItemViewModelList);
+
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        mBinding.setListViewModel(viewModel);
+
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycer_view_main);
+        mRecyclerView = mBinding.recyclerViewMain;
 
         setupRecyclerView();
     }
 
     private void setupRecyclerView(){
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-        List<MainItemViewModel> mainItemViewModelList = new ArrayList<>();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<MainItemViewModel> mainItemViewModelList = viewModel.getMainItemViewModelList();
 
-        for(int i=0;i<15;i++){
-            MainItemViewModel mainItemViewModel = new MainItemViewModel();
-            mainItemViewModel.setTextName("item " + i);
-            if(i%3 == 0){
-                mainItemViewModel.setResOauthIcon(R.drawable.facebook);
+                        for(int i=0;i<15;i++){
+                            MainItemViewModel mainItemViewModel = new MainItemViewModel();
+                            mainItemViewModel.setTextName("item " + i);
+                            if(i%3 == 0){
+                                mainItemViewModel.setResOauthIcon(R.drawable.facebook);
+                            }
+                            if(i%7 == 0){
+                                mainItemViewModel.setResOauthIcon(R.drawable.github);
+                            }
+                            mainItemViewModelList.add(mainItemViewModel);
+                        }
+
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                });
             }
-            if(i%7 == 0){
-                mainItemViewModel.setResOauthIcon(R.drawable.github);
-            }
-            mainItemViewModelList.add(mainItemViewModel);
-        }
-
-        mMainAdapter = new MainAdapter();
-        mRecyclerView.setAdapter(mMainAdapter);
-
-        mMainAdapter.setMainItemModelList(mainItemViewModelList);
-        mMainAdapter.notifyDataSetChanged();
+        }).start();
     }
 }
