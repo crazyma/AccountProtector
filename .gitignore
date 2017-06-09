@@ -4,6 +4,7 @@
 .DS_Store
 /build
 /captures
+/app/schemas
 .externalNativeBuild
 .idea/libraries/
 .idea/workspace.xml
