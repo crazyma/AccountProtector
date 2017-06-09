@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.beibeilab.accountprotector.databinding.MainItemBinding;
-import com.beibeilab.accountprotector.viewmodel.MainItemViewModel;
 
 import java.util.List;
 

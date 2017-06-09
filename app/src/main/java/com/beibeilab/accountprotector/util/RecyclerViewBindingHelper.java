@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.beibeilab.accountprotector.RecyclerViewAdapter;
 
@@ -20,7 +19,6 @@ public class RecyclerViewBindingHelper {
 
     @BindingAdapter({"numberInRow","layout_vertical"})
     public static void bindLayoutManager(@NonNull RecyclerView recyclerView, int numberInRow, boolean vertical) {
-        Log.d("crazyma", "XDDDDDDDDDDDDDDDDDDDDDD");
         int orientation = vertical ? RecyclerView.VERTICAL : RecyclerView.HORIZONTAL;
         RecyclerView.LayoutManager layoutManager;
 
