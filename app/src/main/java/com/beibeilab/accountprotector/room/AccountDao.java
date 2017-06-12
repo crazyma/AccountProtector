@@ -8,6 +8,8 @@ import android.arch.persistence.room.RoomWarnings;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 /**
  * Created by david on 2017/6/9.
  */
@@ -18,6 +20,9 @@ public interface AccountDao {
 
     @Query("SELECT * FROM accountEntity")
     List<AccountEntity> getAll();
+
+    @Query("SELECT * FROM accountEntity")
+    Flowable<AccountEntity> getAllFlowable();
 
     @Insert
     void insert(AccountEntity accountEntity);

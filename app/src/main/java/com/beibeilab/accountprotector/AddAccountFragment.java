@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.util.AndroidRuntimeException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,10 @@ import com.beibeilab.accountprotector.viewmodel.AccountViewModel;
 
 import java.util.List;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 
 /**
@@ -59,11 +64,33 @@ public class AddAccountFragment extends Fragment {
 //                        new AccountEntity("david@25sprout.com","password","crazyma","david@25sprout.com","")
 //                );
 
-                List<AccountEntity> list = accountDatabase.getAccountDao().getAll();
-                Timber.d("XDDDD  " + list.get(0).getAccount() + " " + list.get(0).getPassword());
+//                List<AccountEntity> list = accountDatabase.getAccountDao().getAll();
+//                Timber.d("XDDDD  " + list.get(0).getAccount() + " " + list.get(0).getPassword());
 
             }
         }).start();
+
+        accountDatabase.getAccountDao().getAllFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<AccountEntity>() {
+                    @Override
+                    public void onNext(AccountEntity accountEntity) {
+                        Timber.d("XDDDD  " + accountEntity.getAccount() + " " + accountEntity.getPassword());
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
 
 
     }

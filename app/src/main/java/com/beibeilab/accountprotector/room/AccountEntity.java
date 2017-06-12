@@ -15,6 +15,9 @@ public class AccountEntity {
     @PrimaryKey
     private int uid;
 
+    @ColumnInfo(name = "oauth")
+    private String oauth;
+
     @ColumnInfo(name = "account")
     private String account;
 
@@ -88,5 +91,19 @@ public class AccountEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getOauth() {
+        return oauth;
+    }
+
+    public void setOauth(String oauth) {
+        this.oauth = oauth;
+    }
+    
+    @Ignore
+    public boolean isValid(){
+        return account != null || oauth != null || password != null || email != null ||
+                remark != null || userName != null;
     }
 }
