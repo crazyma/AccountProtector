@@ -15,11 +15,17 @@ import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.viewmodel.AccountViewModel;
+import com.facebook.stetho.Stetho;
+
+import org.reactivestreams.Publisher;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
@@ -53,35 +59,38 @@ public class AddAccountFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
-                AccountDatabase.class, "db-account").build();
+        accountDatabase = AccountDatabase.getInstance(getContext());
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                accountDatabase.getAccountDao().insert(
-//                        new AccountEntity("david@25sprout.com","password","crazyma","david@25sprout.com","")
-//                );
-
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
 //                List<AccountEntity> list = accountDatabase.getAccountDao().getAll();
-//                Timber.d("XDDDD  " + list.get(0).getAccount() + " " + list.get(0).getPassword());
-
-            }
-        }).start();
+//                for (AccountEntity accountEntity : list) {
+//                    Timber.d("result:  " + accountEntity);
+//                }
+//
+//
+//            }
+//        }).start();
 
         accountDatabase.getAccountDao().getAllFlowable()
                 .subscribeOn(Schedulers.io())
+                .flatMap(new Function<List<AccountEntity>, Publisher<AccountEntity>>() {
+                    @Override
+                    public Publisher<AccountEntity> apply(List<AccountEntity> accountEntities) throws Exception {
+                        return Flowable.fromIterable(accountEntities);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<AccountEntity>() {
                     @Override
                     public void onNext(AccountEntity accountEntity) {
-                        Timber.d("XDDDD  " + accountEntity.getAccount() + " " + accountEntity.getPassword());
+                        Timber.d("result : " + accountEntity);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
+                        Timber.e(t.toString());
                     }
 
                     @Override
@@ -89,9 +98,5 @@ public class AddAccountFragment extends Fragment {
 
                     }
                 });
-
-
-
-
     }
 }

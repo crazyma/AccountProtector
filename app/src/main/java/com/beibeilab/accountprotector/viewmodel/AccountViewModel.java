@@ -6,6 +6,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.beibeilab.accountprotector.room.AccountDatabase;
+import com.beibeilab.accountprotector.room.AccountEntityBuilder;
+
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -14,13 +22,44 @@ import timber.log.Timber;
 
 public class AccountViewModel {
 
-    private String account, password, userName, email, remark;
+    private String account, password, userName, email, remark, oauth;
 
     public View.OnClickListener commitButtonClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
-            Timber.d("account: %s, password: %s, userName: %s, email: %s, remark: %s"
-                    , account, password, userName, email, remark);
+        public void onClick(final View view) {
+
+            final AccountEntityBuilder builder = new AccountEntityBuilder();
+            builder.setAccount(account);
+            builder.setPassword(password);
+            builder.setUserName(userName);
+            builder.setEmail(email);
+            builder.setRemark(remark);
+            builder.setOauth(oauth);
+
+            Completable.fromAction(new Action() {
+                @Override
+                public void run() throws Exception {
+                    AccountDatabase.getInstance(view.getContext())
+                            .getAccountDao()
+                            .insert(builder.build());
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(new DisposableCompletableObserver() {
+                @Override
+                public void onComplete() {
+                    Timber.d("insert completed");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Timber.e(e.toString());
+                }
+            });
+
+
+
         }
     };
 

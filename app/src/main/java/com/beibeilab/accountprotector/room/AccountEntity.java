@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.beibeilab.accountprotector.util.Util;
+
 /**
  * Created by david on 2017/6/9.
  */
@@ -12,8 +14,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class AccountEntity {
 
-    @PrimaryKey
-    private int uid;
+    @PrimaryKey(autoGenerate = true)
+    private long uid;
 
     @ColumnInfo(name = "oauth")
     private String oauth;
@@ -45,11 +47,11 @@ public class AccountEntity {
         this.remark = remark;
     }
 
-    public int getUid() {
+    public long getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(long uid) {
         this.uid = uid;
     }
 
@@ -100,10 +102,43 @@ public class AccountEntity {
     public void setOauth(String oauth) {
         this.oauth = oauth;
     }
-    
-    @Ignore
+
     public boolean isValid(){
-        return account != null || oauth != null || password != null || email != null ||
-                remark != null || userName != null;
+        return Util.validString(oauth) || Util.validString(account) || Util.validString(email) ||
+                Util.validString(password) || Util.validString(userName) || Util.validString(remark);
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("uid: ");
+        builder.append(uid);
+        if(oauth != null) {
+            builder.append(", oauth: ");
+            builder.append(oauth);
+        }
+        if(account != null) {
+            builder.append(", account: ");
+            builder.append(account);
+        }
+        if(email != null) {
+            builder.append(", email: ");
+            builder.append(email);
+        }
+        if(password != null) {
+            builder.append(", password: ");
+            builder.append(password);
+        }
+        if(userName != null) {
+            builder.append(", userName: ");
+            builder.append(userName);
+        }
+        if(remark != null) {
+            builder.append(", remark: ");
+            builder.append(remark);
+        }
+
+        return builder.toString();
     }
 }

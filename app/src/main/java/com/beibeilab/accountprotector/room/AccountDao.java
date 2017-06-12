@@ -22,7 +22,7 @@ public interface AccountDao {
     List<AccountEntity> getAll();
 
     @Query("SELECT * FROM accountEntity")
-    Flowable<AccountEntity> getAllFlowable();
+    Flowable<List<AccountEntity>> getAllFlowable();
 
     @Insert
     void insert(AccountEntity accountEntity);

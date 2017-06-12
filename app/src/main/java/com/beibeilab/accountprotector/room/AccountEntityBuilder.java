@@ -4,11 +4,11 @@ package com.beibeilab.accountprotector.room;
  * Created by david on 2017/6/12.
  */
 
-public class AccountEntitfyBuilder {
+public class AccountEntityBuilder {
 
     private AccountEntity entity;
 
-    public AccountEntitfyBuilder() {
+    public AccountEntityBuilder() {
         this.entity = new AccountEntity();
     }
 
@@ -32,7 +32,7 @@ public class AccountEntitfyBuilder {
         entity.setEmail(email);
     }
 
-    public void remark(String remark){
+    public void setRemark(String remark){
         entity.setRemark(remark);
     }
 

@@ -16,4 +16,8 @@ public class Util {
         return gradientDrawable;
     }
 
+    public static boolean validString(String string){
+        return string != null && !string.trim().equals("");
+    }
+
 }
