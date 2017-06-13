@@ -1,12 +1,12 @@
 package com.beibeilab.accountprotector;
 
-import android.accounts.Account;
-import android.arch.persistence.room.Room;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.app.Fragment;
+
 import android.support.annotation.Nullable;
-import android.util.AndroidRuntimeException;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +15,14 @@ import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.viewmodel.AccountViewModel;
-import com.facebook.stetho.Stetho;
 
 import org.reactivestreams.Publisher;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
@@ -61,18 +58,6 @@ public class AddAccountFragment extends Fragment {
 
         accountDatabase = AccountDatabase.getInstance(getContext());
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                List<AccountEntity> list = accountDatabase.getAccountDao().getAll();
-//                for (AccountEntity accountEntity : list) {
-//                    Timber.d("result:  " + accountEntity);
-//                }
-//
-//
-//            }
-//        }).start();
-
         accountDatabase.getAccountDao().getAllFlowable()
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Function<List<AccountEntity>, Publisher<AccountEntity>>() {
@@ -99,4 +84,18 @@ public class AddAccountFragment extends Fragment {
                     }
                 });
     }
+
+    public void showPasswordGenerateDialog(){
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = PasswordGenerateFragment.newInstance();
+        newFragment.show(ft, "dialog");
+    }
+
 }

@@ -1,11 +1,16 @@
 package com.beibeilab.accountprotector.viewmodel;
 
 import android.databinding.BindingAdapter;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.beibeilab.accountprotector.PasswordGenerateFragment;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntityBuilder;
 
@@ -60,6 +65,23 @@ public class AccountViewModel {
 
 
 
+        }
+    };
+
+    public View.OnClickListener generatePasswordClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FragmentActivity activity = (FragmentActivity)view.getContext();
+            FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+            Fragment prev = activity.getSupportFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+
+            // Create and show the dialog.
+            DialogFragment newFragment = PasswordGenerateFragment.newInstance();
+            newFragment.show(ft, "dialog");
         }
     };
 
