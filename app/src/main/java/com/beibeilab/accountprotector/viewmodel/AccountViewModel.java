@@ -1,6 +1,5 @@
 package com.beibeilab.accountprotector.viewmodel;
 
-import android.databinding.BindingAdapter;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 
 import com.beibeilab.accountprotector.PasswordGenerateFragment;
 import com.beibeilab.accountprotector.room.AccountDatabase;
@@ -169,10 +167,5 @@ public class AccountViewModel {
             remark = editable.toString();
         }
     };
-
-    @BindingAdapter("addTextChangedListener")
-    public static void addTextChangedListener(EditText editText, TextWatcher textWatcher) {
-        editText.addTextChangedListener(textWatcher);
-    }
 
 }
