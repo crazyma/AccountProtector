@@ -15,11 +15,20 @@ import timber.log.Timber;
 
 public class PasswordGenerateViewModel {
 
+    public interface PGViewModelListener {
+        void viewModelCallback(int length, boolean[] ruleArray);
+    }
+
     private String length;
     private boolean[] ruleArray;
+    private PGViewModelListener listener;
 
     public PasswordGenerateViewModel() {
         ruleArray = new boolean[4];
+    }
+
+    public void setListener(PGViewModelListener listener) {
+        this.listener = listener;
     }
 
     public void checkedTextViewClickListener(View view) {
@@ -43,6 +52,9 @@ public class PasswordGenerateViewModel {
 
     public void commitButtonClickListener(View view){
         Timber.d("length : " + length + " | " + ruleArray[0] + ", " + ruleArray[1] + ", " + ruleArray[2] + ", " + ruleArray[3]);
+        if(listener != null){
+            listener.viewModelCallback(Integer.valueOf(length), ruleArray);
+        }
     }
 
     public TextWatcher lengthTextWatcher = new TextWatcher() {

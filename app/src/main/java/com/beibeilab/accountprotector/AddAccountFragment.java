@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddAccountFragment extends Fragment {
+public class AddAccountFragment extends Fragment implements PasswordGenerateFragment.PasswordGenerateListener, AddAccountFragmentCallback{
 
     private AddAccountBinding mBinding;
     private AccountViewModel viewModel;
@@ -48,6 +49,7 @@ public class AddAccountFragment extends Fragment {
         viewModel = new AccountViewModel();
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
         mBinding.setAccountViewModel(viewModel);
+        mBinding.setCallback(this);
 
         return mBinding.getRoot();
     }
@@ -85,9 +87,16 @@ public class AddAccountFragment extends Fragment {
                 });
     }
 
-    public void showPasswordGenerateDialog(){
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+    @Override
+    public void onPasswordGenerate(String password) {
+        Timber.d("password: " + password);
+    }
+
+    @Override
+    public void onCreatePGDialog(View view) {
+        FragmentActivity activity = getActivity();
+        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+        Fragment prev = activity.getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
@@ -95,7 +104,7 @@ public class AddAccountFragment extends Fragment {
 
         // Create and show the dialog.
         DialogFragment newFragment = PasswordGenerateFragment.newInstance();
+        newFragment.setTargetFragment(this, 0);
         newFragment.show(ft, "dialog");
     }
-
 }

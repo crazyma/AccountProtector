@@ -6,6 +6,10 @@
         <variable
             name="accountViewModel"
             type="com.beibeilab.accountprotector.viewmodel.AccountViewModel" />
+
+        <variable
+            name="callback"
+            type="com.beibeilab.accountprotector.AddAccountFragmentCallback"/>
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -291,7 +295,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp"
-                android:onClick="@{accountViewModel.generatePasswordClickListener}"
+                android:onClick="@{callback::onCreatePGDialog}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_input_password" />
 
