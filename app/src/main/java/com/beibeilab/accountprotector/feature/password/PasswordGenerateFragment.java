@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector;
+package com.beibeilab.accountprotector.feature.password;
 
 
 import android.content.Context;
@@ -11,16 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.PasswordGenerateBinding;
+import com.beibeilab.accountprotector.feature.account.AddAccountFragment;
 import com.beibeilab.accountprotector.util.PasswordGenerator;
-import com.beibeilab.accountprotector.viewmodel.PasswordGenerateViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PasswordGenerateFragment extends DialogFragment implements PasswordGenerateViewModel.PGViewModelListener {
 
-    interface PasswordGenerateListener{
+    public interface PasswordGenerateListener{
         void onPasswordGenerate(String password);
     }
 

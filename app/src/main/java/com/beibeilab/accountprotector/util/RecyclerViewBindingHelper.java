@@ -7,7 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.beibeilab.accountprotector.RecyclerViewAdapter;
+import com.beibeilab.accountprotector.feature.mainpage.RecyclerViewAdapter;
 
 import java.util.List;
 

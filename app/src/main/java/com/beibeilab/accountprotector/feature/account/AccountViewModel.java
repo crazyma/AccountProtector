@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.viewmodel;
+package com.beibeilab.accountprotector.feature.account;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

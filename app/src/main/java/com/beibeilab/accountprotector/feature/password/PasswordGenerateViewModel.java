@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.viewmodel;
+package com.beibeilab.accountprotector.feature.password;
 
 import android.text.Editable;
 import android.text.TextWatcher;

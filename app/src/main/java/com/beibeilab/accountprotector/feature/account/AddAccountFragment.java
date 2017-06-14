@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector;
+package com.beibeilab.accountprotector.feature.account;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.beibeilab.accountprotector.feature.password.PasswordGenerateFragment;
+import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
-import com.beibeilab.accountprotector.viewmodel.AccountViewModel;
 
 import org.reactivestreams.Publisher;
 

@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.viewmodel;
+package com.beibeilab.accountprotector.feature.mainpage;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;

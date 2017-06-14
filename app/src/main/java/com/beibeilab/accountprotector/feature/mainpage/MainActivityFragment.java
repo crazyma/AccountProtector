@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector;
+package com.beibeilab.accountprotector.feature.mainpage;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.beibeilab.accountprotector.BR;
+import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.MainFragmentBinding;
-import com.beibeilab.accountprotector.viewmodel.MainItemViewModel;
-import com.beibeilab.accountprotector.viewmodel.MainListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

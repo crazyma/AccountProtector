@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector;
+package com.beibeilab.accountprotector.feature.mainpage;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.LayoutRes;
