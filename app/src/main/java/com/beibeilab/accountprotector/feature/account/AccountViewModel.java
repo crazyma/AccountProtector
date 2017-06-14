@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
@@ -59,6 +60,7 @@ public class AccountViewModel extends BaseObservable {
 
                     @Override
                     public void onError(Throwable e) {
+                        Toast.makeText(view.getContext(), R.string.warning_no_parameter, Toast.LENGTH_SHORT).show();
                         Timber.e(e.toString());
                     }
                 });
