@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.room;
+package com.beibeilab.accountprotector.feature.account;
 
 /**
  * Created by david on 2017/6/12.
