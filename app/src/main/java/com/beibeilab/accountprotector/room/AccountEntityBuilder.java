@@ -12,6 +12,10 @@ public class AccountEntityBuilder {
         this.entity = new AccountEntity();
     }
 
+    public void setServiceName(String serviceName){
+        entity.setServiceName(serviceName);
+    }
+
     public void setOauth(String oauth){
         entity.setOauth(oauth);
     }
@@ -41,7 +45,7 @@ public class AccountEntityBuilder {
             return entity;
         else
             throw new RuntimeException(
-                    "AccountEntityBuilder an not create AccountEntity with no parameter");
+                    "AccountEntityBuilder can not create AccountEntity with no parameter");
     }
 
 }

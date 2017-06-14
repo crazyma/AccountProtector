@@ -17,6 +17,9 @@ public class AccountEntity {
     @PrimaryKey(autoGenerate = true)
     private long uid;
 
+    @ColumnInfo(name = "service_name")
+    private String serviceName;
+
     @ColumnInfo(name = "oauth")
     private String oauth;
 
@@ -53,6 +56,14 @@ public class AccountEntity {
 
     public void setUid(long uid) {
         this.uid = uid;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public String getAccount() {
@@ -104,8 +115,9 @@ public class AccountEntity {
     }
 
     public boolean isValid(){
-        return Util.validString(oauth) || Util.validString(account) || Util.validString(email) ||
-                Util.validString(password) || Util.validString(userName) || Util.validString(remark);
+        return Util.validString(serviceName) &&
+                (Util.validString(oauth) || Util.validString(account) || Util.validString(email) ||
+                Util.validString(password) || Util.validString(userName) || Util.validString(remark));
     }
 
     @Override
@@ -114,6 +126,9 @@ public class AccountEntity {
         StringBuilder builder = new StringBuilder();
         builder.append("uid: ");
         builder.append(uid);
+        builder.append(", service name: ");
+        builder.append(serviceName);
+
         if(oauth != null) {
             builder.append(", oauth: ");
             builder.append(oauth);

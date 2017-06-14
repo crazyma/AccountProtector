@@ -23,13 +23,14 @@ import timber.log.Timber;
 
 public class AccountViewModel extends BaseObservable {
 
-    private String account, password, userName, email, remark, oauth;
+    private String account, password, userName, email, remark, oauth, serviceName;
 
     public View.OnClickListener commitButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(final View view) {
 
             final AccountEntityBuilder builder = new AccountEntityBuilder();
+            builder.setServiceName(serviceName);
             builder.setAccount(account);
             builder.setPassword(password);
             builder.setUserName(userName);
@@ -68,6 +69,23 @@ public class AccountViewModel extends BaseObservable {
         @Override
         public void onClick(View view) {
 
+        }
+    };
+
+    public TextWatcher addServiceNameTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            serviceName = editable.toString();
         }
     };
 
