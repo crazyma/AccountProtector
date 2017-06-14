@@ -90,6 +90,7 @@ public class AddAccountFragment extends Fragment implements PasswordGenerateFrag
     @Override
     public void onPasswordGenerate(String password) {
         Timber.d("password: " + password);
+        viewModel.setPassword(password);
     }
 
     @Override

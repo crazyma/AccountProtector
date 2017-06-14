@@ -220,6 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_password"
+                    android:text="@{accountViewModel.password}"
                     android:textColor="@color/edit_text_color"
                     bind:addTextChangedListener="@{accountViewModel.addPasswordTextWatcher}" />
             </android.support.design.widget.TextInputLayout>

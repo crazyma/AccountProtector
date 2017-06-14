@@ -1,9 +1,12 @@
 package com.beibeilab.accountprotector.viewmodel;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntityBuilder;
 
@@ -18,7 +21,7 @@ import timber.log.Timber;
  * Created by david on 2017/6/9.
  */
 
-public class AccountViewModel {
+public class AccountViewModel extends BaseObservable {
 
     private String account, password, userName, email, remark, oauth;
 
@@ -153,4 +156,13 @@ public class AccountViewModel {
         }
     };
 
+    @Bindable
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+        notifyPropertyChanged(BR.password);
+    }
 }

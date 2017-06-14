@@ -15,9 +15,6 @@ import com.beibeilab.accountprotector.databinding.PasswordGenerateBinding;
 import com.beibeilab.accountprotector.util.PasswordGenerator;
 import com.beibeilab.accountprotector.viewmodel.PasswordGenerateViewModel;
 
-import timber.log.Timber;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -78,5 +75,6 @@ public class PasswordGenerateFragment extends DialogFragment implements Password
         if(mListener != null) {
             mListener.onPasswordGenerate(generator.generate());
         }
+        dismiss();
     }
 }
