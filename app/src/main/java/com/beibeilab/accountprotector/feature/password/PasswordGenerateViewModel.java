@@ -1,13 +1,16 @@
 package com.beibeilab.accountprotector.feature.password;
 
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckedTextView;
 
 import com.beibeilab.accountprotector.R;
-
-import timber.log.Timber;
+import com.beibeilab.accountprotector.util.PasswordGenerator;
 
 /**
  * Created by david on 2017/6/13.
@@ -16,12 +19,15 @@ import timber.log.Timber;
 public class PasswordGenerateViewModel {
 
     public interface PGViewModelListener {
-        void viewModelCallback(int length, boolean[] ruleArray);
+        void viewModelCallback(String password);
     }
 
+    public final ObservableBoolean isNextStep = new ObservableBoolean();
     private String length;
     private boolean[] ruleArray;
     private PGViewModelListener listener;
+    private PasswordGenerator generator;
+    final public ObservableField<String> password = new ObservableField<>();
 
     public PasswordGenerateViewModel() {
         ruleArray = new boolean[4];
@@ -50,11 +56,20 @@ public class PasswordGenerateViewModel {
         }
     }
 
-    public void commitButtonClickListener(View view){
-        Timber.d("length : " + length + " | " + ruleArray[0] + ", " + ruleArray[1] + ", " + ruleArray[2] + ", " + ruleArray[3]);
-        if(listener != null){
-            listener.viewModelCallback(Integer.valueOf(length), ruleArray);
+    public void commitButtonClickListener(View view) {
+        if(!isNextStep.get()){
+            isNextStep.set(true);
+            changeLayout(view);
+            generatePassword();
+        }else{
+            if (listener != null) {
+                listener.viewModelCallback(password.get());
+            }
         }
+    }
+
+    public void reGenerateClicked(View view){
+        generatePassword();
     }
 
     public TextWatcher lengthTextWatcher = new TextWatcher() {
@@ -73,4 +88,18 @@ public class PasswordGenerateViewModel {
             length = editable.toString();
         }
     };
+
+    private void changeLayout(View view) {
+        ConstraintLayout constraintLayout = (ConstraintLayout) view.getParent();
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+        constraintSet.connect(view.getId(), ConstraintSet.TOP, R.id.image_refresh, ConstraintSet.BOTTOM, 16);
+        constraintSet.applyTo(constraintLayout);
+    }
+
+    private void generatePassword(){
+        if(generator == null)
+            generator = new PasswordGenerator(Integer.valueOf(length), ruleArray);
+        password.set(generator.generate());
+    }
 }

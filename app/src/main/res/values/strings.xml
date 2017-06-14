@@ -14,6 +14,7 @@
     <string name="generate_other">!@#$%^*()_</string>
     <string name="generate">GENERATE</string>
     <string name="generate_title">密碼產生器</string>
+    <string name="confirm">CONFIRM</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

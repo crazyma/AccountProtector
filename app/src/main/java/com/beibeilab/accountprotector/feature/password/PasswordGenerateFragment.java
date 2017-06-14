@@ -64,6 +64,7 @@ public class PasswordGenerateFragment extends DialogFragment implements Password
 
         mViewModel = new PasswordGenerateViewModel();
         mViewModel.setListener(this);
+        mViewModel.isNextStep.set(false);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_password_generate, container, false);
         mBinding.setViewModel(mViewModel);
 
@@ -71,10 +72,9 @@ public class PasswordGenerateFragment extends DialogFragment implements Password
     }
 
     @Override
-    public void viewModelCallback(int length, boolean[] ruleArray) {
-        PasswordGenerator generator = new PasswordGenerator(length, ruleArray);
+    public void viewModelCallback(String password) {
         if(mListener != null) {
-            mListener.onPasswordGenerate(generator.generate());
+            mListener.onPasswordGenerate(password);
         }
         dismiss();
     }
