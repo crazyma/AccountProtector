@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.account.AddAccountActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
