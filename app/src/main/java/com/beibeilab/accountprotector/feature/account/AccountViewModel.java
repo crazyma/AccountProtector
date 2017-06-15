@@ -30,6 +30,7 @@ import timber.log.Timber;
 public class AccountViewModel extends BaseObservable {
 
     private String account, password, userName, email, remark, serviceName;
+    private AddAccountFragmentCallback callback;
     final public ObservableField<String> oauth = new ObservableField<>();
 
     public void commitButtonClicked(final View view) {
@@ -56,6 +57,8 @@ public class AccountViewModel extends BaseObservable {
                     @Override
                     public void onComplete() {
                         Timber.d("insert completed");
+                        if(callback != null)
+                            callback.onInsertSuccessfully();
                     }
 
                     @Override
@@ -263,5 +266,9 @@ public class AccountViewModel extends BaseObservable {
                     imageView.setImageResource(R.drawable.google);
             }
         }
+    }
+
+    public void setCallback(AddAccountFragmentCallback callback) {
+        this.callback = callback;
     }
 }

@@ -8,4 +8,5 @@ import android.view.View;
 
 public interface AddAccountFragmentCallback {
     void onCreatePGDialog(View view);
+    void onInsertSuccessfully();
 }
