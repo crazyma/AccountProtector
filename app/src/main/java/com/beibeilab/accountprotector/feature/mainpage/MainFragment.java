@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setupRecyclerView(){
-
+        accountDatabase = AccountDatabase.getInstance(getContext());
         accountDatabase.getAccountDao().getAllFlowable()
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Function<List<AccountEntity>, Publisher<AccountEntity>>() {
