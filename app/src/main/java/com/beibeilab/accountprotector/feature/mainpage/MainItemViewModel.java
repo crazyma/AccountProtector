@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.beibeilab.accountprotector.R;
+import com.beibeilab.accountprotector.feature.account.AccountUnit;
+import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.util.Util;
 
 /**
@@ -15,6 +18,13 @@ public class MainItemViewModel {
     private String textName;
     private Drawable drawableIcon;
     private int resOauthIcon;
+
+    public MainItemViewModel() {
+    }
+
+    public MainItemViewModel(AccountEntity accountEntity) {
+        setByAccountEntity(accountEntity);
+    }
 
     public String getTextName() {
         return textName;
@@ -38,6 +48,27 @@ public class MainItemViewModel {
 
     public void setResOauthIcon(int resOauthIcon) {
         this.resOauthIcon = resOauthIcon;
+    }
+
+    public void setByAccountEntity(AccountEntity accountEntity){
+        textName = accountEntity.getServiceName();
+        if(accountEntity.getOauth() != null) {
+            switch (accountEntity.getOauth()) {
+                case AccountUnit.OAUTH_GOOGLE:
+                    resOauthIcon = R.drawable.google;
+                    break;
+                case AccountUnit.OAUTH_FACEBOOK:
+                    resOauthIcon = R.drawable.facebook;
+                    break;
+                case AccountUnit.OAUTH_TWITTER:
+                    resOauthIcon = R.drawable.twitter;
+                    break;
+                case AccountUnit.OAUTH_GITHUB:
+                    resOauthIcon = R.drawable.github;
+                    break;
+                default:
+            }
+        }
     }
 
     @BindingAdapter({"ovalColor"})
