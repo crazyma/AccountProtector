@@ -1,5 +1,6 @@
 package com.beibeilab.accountprotector.room;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -23,6 +24,9 @@ public interface AccountDao {
 
     @Query("SELECT * FROM accountEntity")
     Flowable<List<AccountEntity>> getAllFlowable();
+
+    @Query("SELECT * FROM accountEntity")
+    LiveData<List<AccountEntity>> getAllFromLiveData();
 
     @Insert
     void insert(AccountEntity accountEntity);
