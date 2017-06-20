@@ -10,6 +10,8 @@ import com.beibeilab.accountprotector.feature.account.AccountUnit;
 import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.util.Util;
 
+import timber.log.Timber;
+
 /**
  * Created by david on 2017/5/29.
  */
@@ -17,7 +19,8 @@ import com.beibeilab.accountprotector.util.Util;
 public class MainItemViewModel {
     private String textName;
     private Drawable drawableIcon;
-    private int resOauthIcon;
+    private int resOauthIcon, position;
+    private View.OnClickListener itemClickListener;
 
     public MainItemViewModel() {
     }
@@ -48,6 +51,22 @@ public class MainItemViewModel {
 
     public void setResOauthIcon(int resOauthIcon) {
         this.resOauthIcon = resOauthIcon;
+    }
+
+    public View.OnClickListener getItemClickListener() {
+        return itemClickListener;
+    }
+
+    public void setItemClickListener(View.OnClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public void setByAccountEntity(AccountEntity accountEntity){
@@ -85,5 +104,11 @@ public class MainItemViewModel {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(resId);
         }
+    }
+
+    @BindingAdapter("itemClickListener")
+    public static void setOnItemClickListener(View view, View.OnClickListener clickListener){
+        Timber.d("setup item click listener  |  " + clickListener.toString());
+        view.setOnClickListener(clickListener);
     }
 }

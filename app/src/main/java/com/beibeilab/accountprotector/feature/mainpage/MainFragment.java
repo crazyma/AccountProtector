@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
@@ -20,10 +21,12 @@ import com.beibeilab.accountprotector.room.AccountEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends LifecycleFragment implements Runnable{
+public class MainFragment extends LifecycleFragment implements Runnable {
 
     private MainFragmentBinding mBinding;
     private MainListViewModel viewModel;
@@ -68,8 +71,13 @@ public class MainFragment extends LifecycleFragment implements Runnable{
                 List<MainItemViewModel> mainItemViewModelList = viewModel.getMainItemViewModelList();
                 mainItemViewModelList.clear();
 
-                for (AccountEntity accountEntity : accountEntities) {
-                    mainItemViewModelList.add(new MainItemViewModel(accountEntity));
+                for (int i = 0; i < accountEntities.size(); i++) {
+                    AccountEntity accountEntity = accountEntities.get(i);
+
+                    MainItemViewModel viewModel = new MainItemViewModel(accountEntity);
+                    viewModel.setItemClickListener(itemClickListener);
+                    viewModel.setPosition(i);
+                    mainItemViewModelList.add(viewModel);
                 }
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -82,18 +90,18 @@ public class MainFragment extends LifecycleFragment implements Runnable{
         });
     }
 
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         setupRecyclerViewWithLiveData();
 //        setupRecyclerViewWithSingleDaoInThread();
     }
 
-    private void setupRecyclerViewWithLiveData(){
+    private void setupRecyclerViewWithLiveData() {
         accountDatabase = AccountDatabase.getInstance(getContext());
         liveData = accountDatabase.getAccountDao().getAllFromLiveData();
         new Thread(this).start();
     }
 
-    private void setupRecyclerViewWithSingleDaoInThread(){
+    private void setupRecyclerViewWithSingleDaoInThread() {
         accountDatabase = AccountDatabase.getInstance(getContext());
         new Thread(new Runnable() {
             @Override
@@ -108,8 +116,13 @@ public class MainFragment extends LifecycleFragment implements Runnable{
                 mainItemViewModelList.clear();
 
                 List<AccountEntity> accountEntityList = accountDatabase.getAccountDao().getAll();
-                for (AccountEntity accountEntity : accountEntityList) {
-                    mainItemViewModelList.add(new MainItemViewModel(accountEntity));
+                for (int i = 0; i < accountEntityList.size(); i++) {
+                    AccountEntity accountEntity = accountEntityList.get(i);
+
+                    MainItemViewModel viewModel = new MainItemViewModel(accountEntity);
+                    viewModel.setItemClickListener(itemClickListener);
+                    viewModel.setPosition(i);
+                    mainItemViewModelList.add(viewModel);
                 }
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -121,5 +134,12 @@ public class MainFragment extends LifecycleFragment implements Runnable{
             }
         }).start();
     }
+
+    private View.OnClickListener itemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Timber.d("ON CLICK " + view.getTag());
+        }
+    };
 
 }

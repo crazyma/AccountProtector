@@ -12,7 +12,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="72dp">
+        android:layout_height="72dp"
+        android:tag="@{itemModel.position}"
+        bind:itemClickListener="@{itemModel.itemClickListener}">
 
         <ImageView
             android:id="@+id/image_avatar"
