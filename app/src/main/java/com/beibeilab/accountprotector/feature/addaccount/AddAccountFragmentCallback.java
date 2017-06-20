@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.feature.account;
+package com.beibeilab.accountprotector.feature.addaccount;
 
 import android.view.View;
 

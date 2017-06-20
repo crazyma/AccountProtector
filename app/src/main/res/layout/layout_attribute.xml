@@ -7,11 +7,11 @@
 
         <variable
             name="accountViewModel"
-            type="com.beibeilab.accountprotector.feature.account.AccountViewModel" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel" />
 
         <variable
             name="callback"
-            type="com.beibeilab.accountprotector.feature.account.AddAccountFragmentCallback" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AddAccountFragmentCallback" />
     </data>
 
     <android.support.constraint.ConstraintLayout

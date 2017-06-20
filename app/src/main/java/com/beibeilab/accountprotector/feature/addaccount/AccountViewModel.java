@@ -1,4 +1,4 @@
-package com.beibeilab.accountprotector.feature.account;
+package com.beibeilab.accountprotector.feature.addaccount;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
+import com.beibeilab.accountprotector.feature.account.AccountUnit;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntityBuilder;
 import com.beibeilab.accountprotector.util.Util;
