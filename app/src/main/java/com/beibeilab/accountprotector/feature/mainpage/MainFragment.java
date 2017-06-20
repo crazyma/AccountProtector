@@ -6,6 +6,8 @@ import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.MainFragmentBinding;
+import com.beibeilab.accountprotector.feature.account.AccountFragment;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 
@@ -139,6 +142,13 @@ public class MainFragment extends LifecycleFragment implements Runnable {
         @Override
         public void onClick(View view) {
             Timber.d("ON CLICK " + view.getTag());
+
+            AccountFragment fragment = new AccountFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_content, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
     };
 

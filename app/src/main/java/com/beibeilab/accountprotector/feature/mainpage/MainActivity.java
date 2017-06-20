@@ -3,6 +3,8 @@ package com.beibeilab.accountprotector.feature.mainpage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.beibeilab.accountprotector.R;
+import com.beibeilab.accountprotector.feature.account.AccountFragment;
 import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                 jumpToAddAccount();
             }
         });
+
+        setupFragment();
     }
 
     @Override
@@ -50,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupFragment(){
+        MainFragment fragment = new MainFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public void jumpToAddAccount(){
