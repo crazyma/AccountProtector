@@ -141,7 +141,8 @@ public class MainFragment extends LifecycleFragment implements Runnable {
     private View.OnClickListener itemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Timber.d("ON CLICK " + view.getTag());
+            int index = (int) view.getTag();
+            // TODO: 2017/6/24 這裡應該是要從 entity 裡面轉成 AccountViewModel
 
             AccountFragment fragment = new AccountFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.beibeilab.accountprotector.R;
-import com.beibeilab.accountprotector.feature.account.AccountFragment;
 import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 
 public class MainActivity extends AppCompatActivity {
