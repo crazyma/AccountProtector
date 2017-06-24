@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,6 +51,8 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         viewModel = new AccountViewModel();
         viewModel.setCallback(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
@@ -88,6 +93,20 @@ public class AddAccountFragment extends Fragment implements
 
                     }
                 });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_add_account, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_save_account){
+            viewModel.commitNewAccount(getContext());
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

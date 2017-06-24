@@ -1,5 +1,6 @@
 package com.beibeilab.accountprotector.feature.addaccount;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
@@ -35,39 +36,7 @@ public class AccountViewModel extends BaseObservable {
     final public ObservableField<String> oauth = new ObservableField<>();
 
     public void commitButtonClicked(final View view) {
-        final AccountEntityBuilder builder = new AccountEntityBuilder();
-        builder.setServiceName(serviceName);
-        builder.setAccount(account);
-        builder.setPassword(password);
-        builder.setUserName(userName);
-        builder.setEmail(email);
-        builder.setRemark(remark);
-        builder.setOauth(oauth.get());
-
-        Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                AccountDatabase.getInstance(view.getContext())
-                        .getAccountDao()
-                        .insert(builder.build());
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        Timber.d("insert completed");
-                        if(callback != null)
-                            callback.onInsertSuccessfully();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(view.getContext(), R.string.warning_no_parameter, Toast.LENGTH_SHORT).show();
-                        Timber.e(e.toString());
-                    }
-                });
+        commitNewAccount(view.getContext());
     }
 
     public TextWatcher addServiceNameTextWatcher = new TextWatcher() {
@@ -271,5 +240,41 @@ public class AccountViewModel extends BaseObservable {
 
     public void setCallback(AddAccountFragmentCallback callback) {
         this.callback = callback;
+    }
+
+    public void commitNewAccount(final Context context){
+        final AccountEntityBuilder builder = new AccountEntityBuilder();
+        builder.setServiceName(serviceName);
+        builder.setAccount(account);
+        builder.setPassword(password);
+        builder.setUserName(userName);
+        builder.setEmail(email);
+        builder.setRemark(remark);
+        builder.setOauth(oauth.get());
+
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                AccountDatabase.getInstance(context)
+                        .getAccountDao()
+                        .insert(builder.build());
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Timber.d("insert completed");
+                        if(callback != null)
+                            callback.onInsertSuccessfully();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(context, R.string.warning_no_parameter, Toast.LENGTH_SHORT).show();
+                        Timber.e(e.toString());
+                    }
+                });
     }
 }
