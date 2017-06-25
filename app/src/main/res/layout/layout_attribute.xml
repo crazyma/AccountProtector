@@ -25,8 +25,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@mipmap/ic_launcher"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <ImageView
             android:id="@+id/image_password"
@@ -84,7 +84,9 @@
                 android:id="@+id/edit_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_account"
+                android:text="@{accountViewModel.account}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addAccountTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -104,6 +106,7 @@
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_password"
                 android:text="@{accountViewModel.password}"
                 android:textColor="@color/edit_text_color"
@@ -125,7 +128,9 @@
                 android:id="@+id/edit_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_user_name"
+                android:text="@{accountViewModel.userName}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addUserNameTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -145,7 +150,9 @@
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_email"
+                android:text="@{accountViewModel.email}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addEmailTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -165,7 +172,9 @@
                 android:id="@+id/edit_remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_remark"
+                android:text="@{accountViewModel.remark}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addRemarkTextWatcher}" />
         </android.support.design.widget.TextInputLayout>

@@ -8,6 +8,7 @@ import android.databinding.ObservableField;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class AccountViewModel extends BaseObservable {
     private String account, password, userName, email, remark, serviceName;
     private AddAccountFragmentCallback callback;
     final public ObservableField<String> oauth = new ObservableField<>();
+    private boolean editable;
 
     public AccountViewModel() {
     }
@@ -159,6 +161,55 @@ public class AccountViewModel extends BaseObservable {
         notifyPropertyChanged(BR.password);
     }
 
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
     public void oauthButtonClicked(View view) {
         String newOauth;
 
@@ -188,7 +239,31 @@ public class AccountViewModel extends BaseObservable {
     }
 
     @BindingAdapter("oauth_icon")
-    public static void setOauthIcon(ImageView imageView, String oauth) {
+    public static void setOauthIcon(ImageView imageView, String oauth){
+        if(Util.validString(oauth)){
+            imageView.setVisibility(View.VISIBLE);
+            switch (oauth){
+                case AccountUnit.OAUTH_GOOGLE:
+                    imageView.setImageResource(R.drawable.google);
+                    break;
+                case AccountUnit.OAUTH_FACEBOOK:
+                    imageView.setImageResource(R.drawable.facebook);
+                    break;
+                case AccountUnit.OAUTH_TWITTER:
+                    imageView.setImageResource(R.drawable.twitter);
+                    break;
+                case AccountUnit.OAUTH_GITHUB:
+                    imageView.setImageResource(R.drawable.github);
+                    break;
+                default:
+            }
+        }else{
+            imageView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @BindingAdapter("oauth_icon_switch")
+    public static void setOauthIconSwitch(ImageView imageView, String oauth) {
         if (Util.validString(oauth)) {
             switch (imageView.getId()) {
                 case R.id.image_google:
@@ -294,5 +369,40 @@ public class AccountViewModel extends BaseObservable {
         email = accountEntity.getEmail();
         remark = accountEntity.getRemark();
         oauth.set(accountEntity.getOauth());
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("service name: ");
+        builder.append(serviceName);
+
+        if(oauth.get() != null) {
+            builder.append(", oauth: ");
+            builder.append(oauth.get());
+        }
+        if(account != null) {
+            builder.append(", account: ");
+            builder.append(account);
+        }
+        if(email != null) {
+            builder.append(", email: ");
+            builder.append(email);
+        }
+        if(password != null) {
+            builder.append(", password: ");
+            builder.append(password);
+        }
+        if(userName != null) {
+            builder.append(", userName: ");
+            builder.append(userName);
+        }
+        if(remark != null) {
+            builder.append(", remark: ");
+            builder.append(remark);
+        }
+
+        return builder.toString();
     }
 }

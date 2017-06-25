@@ -54,6 +54,7 @@ public class AddAccountFragment extends Fragment implements
         setHasOptionsMenu(true);
 
         viewModel = new AccountViewModel();
+        viewModel.setEditable(true);
         viewModel.setCallback(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
         mBinding.setAccountViewModel(viewModel);

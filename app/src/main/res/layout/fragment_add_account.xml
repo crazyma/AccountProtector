@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class="AddAccountBinding">
 
@@ -12,9 +15,7 @@
             type="com.beibeilab.accountprotector.feature.addaccount.AddAccountFragmentCallback" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -82,7 +83,7 @@
                 app:layout_constraintStart_toEndOf="@+id/image_twitter"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
                 app:srcCompat="@drawable/github"
-                bind:oauth_icon="@{accountViewModel.oauth}" />
+                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <ImageView
                 android:id="@+id/image_twitter"
@@ -94,7 +95,7 @@
                 app:layout_constraintStart_toEndOf="@+id/image_facebook"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
                 app:srcCompat="@drawable/twitter"
-                bind:oauth_icon="@{accountViewModel.oauth}"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="162dp" />
 
             <ImageView
@@ -107,7 +108,7 @@
                 app:layout_constraintStart_toEndOf="@+id/image_google"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
                 app:srcCompat="@drawable/facebook"
-                bind:oauth_icon="@{accountViewModel.oauth}"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="118dp" />
 
             <ImageView
@@ -122,7 +123,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider1"
                 app:srcCompat="@drawable/google"
-                bind:oauth_icon="@{accountViewModel.oauth}" />
+                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -143,11 +144,11 @@
                 layout="@layout/layout_attribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:accountViewModel="@{accountViewModel}"
+                app:callback="@{callback}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider2"
-                app:accountViewModel="@{accountViewModel}"
-                app:callback="@{callback}"/>
+                app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
 
         </android.support.constraint.ConstraintLayout>
 

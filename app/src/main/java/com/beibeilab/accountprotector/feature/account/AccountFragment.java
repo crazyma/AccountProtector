@@ -12,6 +12,8 @@ import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
 
+import timber.log.Timber;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -36,7 +38,9 @@ public class AccountFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false);
+        mAccountViewModel.setEditable(false);
         mBinding.setAccountViewModel(mAccountViewModel);
+        Timber.d("account view model : " + mAccountViewModel.toString());
         return mBinding.getRoot();
     }
 
