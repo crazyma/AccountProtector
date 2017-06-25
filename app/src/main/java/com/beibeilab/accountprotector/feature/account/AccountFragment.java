@@ -1,5 +1,6 @@
 package com.beibeilab.accountprotector.feature.account;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
@@ -48,8 +49,13 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
 
     @Override
     public void onPasswordButtonClick(View view) {
-
         Toast.makeText(getContext(), "COPY", Toast.LENGTH_LONG).show();
+        copyToClipboard(mAccountViewModel.getPassword());
+    }
 
+    private void copyToClipboard(String str){
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("text label",str);
+        clipboard.setPrimaryClip(clip);
     }
 }
