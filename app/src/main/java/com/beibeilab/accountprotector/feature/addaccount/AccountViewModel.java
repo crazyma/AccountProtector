@@ -39,6 +39,7 @@ public class AccountViewModel extends BaseObservable {
     }
 
     private String account, password, userName, email, remark, serviceName;
+    private int color;
     private AddAccountFragmentCallback callback;
     final public ObservableField<String> oauth = new ObservableField<>();
     private boolean editable;
@@ -166,6 +167,13 @@ public class AccountViewModel extends BaseObservable {
         notifyPropertyChanged(BR.password);
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
 
     public String getAccount() {
         return account;
@@ -351,6 +359,7 @@ public class AccountViewModel extends BaseObservable {
         builder.setEmail(email);
         builder.setRemark(remark);
         builder.setOauth(oauth.get());
+        builder.setColor(color);
 
         Completable.fromAction(new Action() {
             @Override
@@ -385,6 +394,7 @@ public class AccountViewModel extends BaseObservable {
         userName = accountEntity.getUserName();
         email = accountEntity.getEmail();
         remark = accountEntity.getRemark();
+        color = accountEntity.getColor();
         oauth.set(accountEntity.getOauth());
     }
 
@@ -419,6 +429,8 @@ public class AccountViewModel extends BaseObservable {
             builder.append(", remark: ");
             builder.append(remark);
         }
+        builder.append(", color: ");
+        builder.append(color);
 
         return builder.toString();
     }

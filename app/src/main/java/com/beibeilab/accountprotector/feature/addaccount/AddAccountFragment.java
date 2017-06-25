@@ -47,7 +47,7 @@ public class AddAccountFragment extends Fragment implements
         ColorPickerSwatch.OnColorSelectedListener{
 
     private AddAccountBinding mBinding;
-    private AccountViewModel viewModel;
+    private AccountViewModel accountViewModel;
 
     private AccountDatabase accountDatabase;
 
@@ -61,11 +61,11 @@ public class AddAccountFragment extends Fragment implements
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        viewModel = new AccountViewModel();
-        viewModel.setEditable(true);
-        viewModel.setCallback(this);
+        accountViewModel = new AccountViewModel();
+        accountViewModel.setEditable(true);
+        accountViewModel.setCallback(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
-        mBinding.setAccountViewModel(viewModel);
+        mBinding.setAccountViewModel(accountViewModel);
         mBinding.setPasswordClickListener(this);
         mBinding.setCallback(this);
 
@@ -114,14 +114,14 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_save_account){
-            viewModel.commitNewAccount(getContext());
+            accountViewModel.commitNewAccount(getContext());
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onPasswordGenerate(String password) {
-        viewModel.setPassword(password);
+        accountViewModel.setPassword(password);
     }
 
     @Override
@@ -163,6 +163,7 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public void onColorSelected(int color) {
+        accountViewModel.setColor(color);
         setupToolbarColor(color);
     }
 

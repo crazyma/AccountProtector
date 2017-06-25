@@ -40,6 +40,10 @@ public class AccountEntityBuilder {
         entity.setRemark(remark);
     }
 
+    public void setColor(int color){
+        entity.setColor(color);
+    }
+
     public AccountEntity build(){
         if(entity.isValid())
             return entity;

@@ -145,9 +145,10 @@ public class MainFragment extends LifecycleFragment implements Runnable {
             int index = (int) view.getTag();
 
             List<AccountEntity> accountEntityList = liveData.getValue();
-            Timber.d("on click " + accountEntityList.get(index).getServiceName());
 
             AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
+            Timber.d("on click " + accountViewModel);
+            
             AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

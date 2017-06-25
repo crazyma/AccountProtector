@@ -38,6 +38,9 @@ public class AccountEntity {
     @ColumnInfo(name = "remark")
     private String remark;
 
+    @ColumnInfo(name = "color")
+    private int color;
+
     public AccountEntity() {
     }
 
@@ -114,6 +117,14 @@ public class AccountEntity {
         this.oauth = oauth;
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     public boolean isValid(){
         return Util.validString(serviceName) &&
                 (Util.validString(oauth) || Util.validString(account) || Util.validString(email) ||
@@ -153,6 +164,8 @@ public class AccountEntity {
             builder.append(", remark: ");
             builder.append(remark);
         }
+        builder.append(", color: ");
+        builder.append(color);
 
         return builder.toString();
     }
