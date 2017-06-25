@@ -1,13 +1,26 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.beibeilab.accountprotector.feature.account.AccountFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/layout_content"
-        layout="@layout/content_account"
+    <data class="AccountFragmentBinding">
+
+        <variable
+            name="accountViewModel"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        tools:context="com.beibeilab.accountprotector.feature.account.AccountFragment">
 
-</ScrollView>
+        <include
+            android:id="@+id/layout_content"
+            layout="@layout/content_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:accountViewModel="@{accountViewModel}"/>
+
+    </ScrollView>
+</layout>

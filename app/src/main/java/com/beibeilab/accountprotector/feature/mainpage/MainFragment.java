@@ -18,6 +18,7 @@ import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.MainFragmentBinding;
 import com.beibeilab.accountprotector.feature.account.AccountFragment;
+import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 
@@ -142,9 +143,12 @@ public class MainFragment extends LifecycleFragment implements Runnable {
         @Override
         public void onClick(View view) {
             int index = (int) view.getTag();
-            // TODO: 2017/6/24 這裡應該是要從 entity 裡面轉成 AccountViewModel
 
-            AccountFragment fragment = new AccountFragment();
+            List<AccountEntity> accountEntityList = liveData.getValue();
+            Timber.d("on click " + accountEntityList.get(index).getServiceName());
+
+            AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
+            AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_content, fragment);

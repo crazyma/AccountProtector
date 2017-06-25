@@ -15,6 +15,7 @@ import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.feature.account.AccountUnit;
 import com.beibeilab.accountprotector.room.AccountDatabase;
+import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.room.AccountEntityBuilder;
 import com.beibeilab.accountprotector.util.Util;
 
@@ -34,6 +35,13 @@ public class AccountViewModel extends BaseObservable {
     private String account, password, userName, email, remark, serviceName;
     private AddAccountFragmentCallback callback;
     final public ObservableField<String> oauth = new ObservableField<>();
+
+    public AccountViewModel() {
+    }
+
+    public AccountViewModel(AccountEntity accountEntity) {
+        setByAccountEntity(accountEntity);
+    }
 
     public void commitButtonClicked(final View view) {
         commitNewAccount(view.getContext());
@@ -276,5 +284,15 @@ public class AccountViewModel extends BaseObservable {
                         Timber.e(e.toString());
                     }
                 });
+    }
+
+    private void setByAccountEntity(AccountEntity accountEntity){
+        serviceName = accountEntity.getServiceName();
+        account = accountEntity.getAccount();
+        password = accountEntity.getPassword();
+        userName = accountEntity.getUserName();
+        email = accountEntity.getEmail();
+        remark = accountEntity.getRemark();
+        oauth.set(accountEntity.getOauth());
     }
 }
