@@ -6,6 +6,7 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -167,12 +168,14 @@ public class AccountViewModel extends BaseObservable {
         notifyPropertyChanged(BR.password);
     }
 
+    @Bindable
     public int getColor() {
         return color;
     }
 
     public void setColor(int color) {
         this.color = color;
+        notifyPropertyChanged(BR.color);
     }
 
     public String getAccount() {
@@ -344,6 +347,13 @@ public class AccountViewModel extends BaseObservable {
         }
 
         view.setVisibility(View.VISIBLE);
+    }
+
+    @BindingAdapter("oval_color")
+    public static void setOvalDrawable(ImageView imageView, int color){
+        int width = imageView.getContext().getResources().getDimensionPixelSize(
+                R.dimen.color_picker_button_width);
+        imageView.setBackground(Util.createOvalDrawable(color, width));
     }
 
     public void setCallback(AddAccountFragmentCallback callback) {

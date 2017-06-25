@@ -21,7 +21,7 @@
     <color name="cyan">#00BBD5</color>
     <color name="teal">#009687</color>
     <color name="green">#46AF4A</color>
-    <color name="light_green">#88C440</color>
+    <!--<color name="light_green">#88C440</color>-->
     <color name="lime">#CCDD1E</color>
     <color name="yellow">#FFEC16</color>
     <color name="amber">#FFC100</color>
@@ -42,7 +42,7 @@
         <item>@color/cyan</item>
         <item>@color/teal</item>
         <item>@color/green</item>
-        <item>@color/light_green</item>
+        <item>@color/colorPrimary</item>
         <item>@color/lime</item>
         <item>@color/yellow</item>
         <item>@color/amber</item>

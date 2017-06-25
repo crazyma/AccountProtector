@@ -46,11 +46,14 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
                 android:onClick="@{callback::onPickerButtonClicked}"
+                android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/icon_color_picker"
+                bind:oval_color="@{accountViewModel.color}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:layout_marginTop="24dp" />
 
             <View
                 android:id="@+id/view_divider1"

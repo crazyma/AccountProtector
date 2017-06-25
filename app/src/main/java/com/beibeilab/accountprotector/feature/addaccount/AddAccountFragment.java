@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,7 @@ public class AddAccountFragment extends Fragment implements
         accountViewModel = new AccountViewModel();
         accountViewModel.setEditable(true);
         accountViewModel.setCallback(this);
+        accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
         mBinding.setAccountViewModel(accountViewModel);
         mBinding.setPasswordClickListener(this);
@@ -129,7 +131,7 @@ public class AddAccountFragment extends Fragment implements
     public void onPickerButtonClicked(View view) {
 
         int[] colors = getContext().getResources().getIntArray(R.array.androidcolors);
-        int selectedColor = colors[0];
+        int selectedColor = accountViewModel.getColor();
 
         ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
         colorPickerDialog.initialize(
