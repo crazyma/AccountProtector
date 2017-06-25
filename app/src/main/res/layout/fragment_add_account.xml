@@ -87,7 +87,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_twitter"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/github"
+                app:srcCompat="@drawable/icon_github_pale"
                 bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <ImageView
@@ -99,7 +99,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_facebook"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/twitter"
+                app:srcCompat="@drawable/icon_twitter_pale"
                 bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="162dp" />
 
@@ -112,7 +112,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_google"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/facebook"
+                app:srcCompat="@drawable/icon_facebook_pale"
                 bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="118dp" />
 
@@ -127,7 +127,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider1"
-                app:srcCompat="@drawable/google"
+                app:srcCompat="@drawable/icon_google_pale"
                 bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <android.support.constraint.Guideline

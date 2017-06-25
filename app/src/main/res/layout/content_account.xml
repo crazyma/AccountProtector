@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/github"
+            app:srcCompat="@drawable/icon_github"
             bind:oauth_icon="@{accountViewModel.oauth}" />
 
         <include

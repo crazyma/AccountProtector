@@ -257,16 +257,16 @@ public class AccountViewModel extends BaseObservable {
             imageView.setVisibility(View.VISIBLE);
             switch (oauth){
                 case AccountUnit.OAUTH_GOOGLE:
-                    imageView.setImageResource(R.drawable.google);
+                    imageView.setImageResource(R.drawable.icon_google);
                     break;
                 case AccountUnit.OAUTH_FACEBOOK:
-                    imageView.setImageResource(R.drawable.facebook);
+                    imageView.setImageResource(R.drawable.icon_facebook);
                     break;
                 case AccountUnit.OAUTH_TWITTER:
-                    imageView.setImageResource(R.drawable.twitter);
+                    imageView.setImageResource(R.drawable.icon_twitter);
                     break;
                 case AccountUnit.OAUTH_GITHUB:
-                    imageView.setImageResource(R.drawable.github);
+                    imageView.setImageResource(R.drawable.icon_github);
                     break;
                 default:
             }
@@ -280,56 +280,56 @@ public class AccountViewModel extends BaseObservable {
         if (Util.validString(oauth)) {
             switch (imageView.getId()) {
                 case R.id.image_google:
-                    imageView.setImageResource(R.drawable.google);
+                    imageView.setImageResource(R.drawable.icon_google_pale);
                     break;
                 case R.id.image_facebook:
-                    imageView.setImageResource(R.drawable.facebook);
+                    imageView.setImageResource(R.drawable.icon_facebook_pale);
                     break;
                 case R.id.image_twitter:
-                    imageView.setImageResource(R.drawable.twitter);
+                    imageView.setImageResource(R.drawable.icon_twitter_pale);
                     break;
                 case R.id.image_github:
-                    imageView.setImageResource(R.drawable.github);
+                    imageView.setImageResource(R.drawable.icon_github_pale);
                     break;
                 default:
-                    imageView.setImageResource(R.drawable.google);
+                    imageView.setImageResource(R.drawable.icon_google_pale);
             }
 
             switch (oauth) {
                 case AccountUnit.OAUTH_GOOGLE:
                     if (imageView.getId() == R.id.image_google)
-                        imageView.setImageResource(R.mipmap.ic_launcher_round);
+                        imageView.setImageResource(R.drawable.icon_google);
                     break;
                 case AccountUnit.OAUTH_FACEBOOK:
                     if (imageView.getId() == R.id.image_facebook)
-                        imageView.setImageResource(R.mipmap.ic_launcher_round);
+                        imageView.setImageResource(R.drawable.icon_facebook);
                     break;
                 case AccountUnit.OAUTH_TWITTER:
                     if (imageView.getId() == R.id.image_twitter)
-                        imageView.setImageResource(R.mipmap.ic_launcher_round);
+                        imageView.setImageResource(R.drawable.icon_twitter);
                     break;
                 case AccountUnit.OAUTH_GITHUB:
                     if (imageView.getId() == R.id.image_github)
-                        imageView.setImageResource(R.mipmap.ic_launcher_round);
+                        imageView.setImageResource(R.drawable.icon_github);
                     break;
                 default:
             }
         } else {
             switch (imageView.getId()) {
                 case R.id.image_google:
-                    imageView.setImageResource(R.drawable.google);
+                    imageView.setImageResource(R.drawable.icon_google_pale);
                     break;
                 case R.id.image_facebook:
-                    imageView.setImageResource(R.drawable.facebook);
+                    imageView.setImageResource(R.drawable.icon_facebook_pale);
                     break;
                 case R.id.image_twitter:
-                    imageView.setImageResource(R.drawable.twitter);
+                    imageView.setImageResource(R.drawable.icon_twitter_pale);
                     break;
                 case R.id.image_github:
-                    imageView.setImageResource(R.drawable.github);
+                    imageView.setImageResource(R.drawable.icon_github_pale);
                     break;
                 default:
-                    imageView.setImageResource(R.drawable.google);
+                    imageView.setImageResource(R.drawable.icon_google_pale);
             }
         }
     }

@@ -74,16 +74,16 @@ public class MainItemViewModel {
         if(accountEntity.getOauth() != null) {
             switch (accountEntity.getOauth()) {
                 case AccountUnit.OAUTH_GOOGLE:
-                    resOauthIcon = R.drawable.google;
+                    resOauthIcon = R.drawable.icon_google_small;
                     break;
                 case AccountUnit.OAUTH_FACEBOOK:
-                    resOauthIcon = R.drawable.facebook;
+                    resOauthIcon = R.drawable.icon_facebook_small;
                     break;
                 case AccountUnit.OAUTH_TWITTER:
-                    resOauthIcon = R.drawable.twitter;
+                    resOauthIcon = R.drawable.icon_twitter_small;
                     break;
                 case AccountUnit.OAUTH_GITHUB:
-                    resOauthIcon = R.drawable.github;
+                    resOauthIcon = R.drawable.icon_github_small;
                     break;
                 default:
             }

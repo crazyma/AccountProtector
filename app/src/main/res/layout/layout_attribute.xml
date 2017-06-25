@@ -28,11 +28,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher"
-            bind:visible_editable="@{accountViewModel.editable}"
-            bind:visible_content="@{accountViewModel.account}"/>
+            app:srcCompat="@drawable/icon_indicator_account"
+            bind:visible_content="@{accountViewModel.account}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_password"
@@ -40,11 +41,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_account"
-            app:srcCompat="@mipmap/ic_launcher"
-            bind:visible_editable="@{accountViewModel.editable}"
-            bind:visible_content="@{accountViewModel.password}"/>
+            app:srcCompat="@drawable/icon_indicator_password"
+            bind:visible_content="@{accountViewModel.password}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_user_name"
@@ -52,11 +54,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_password"
-            app:srcCompat="@mipmap/ic_launcher"
-            bind:visible_editable="@{accountViewModel.editable}"
-            bind:visible_content="@{accountViewModel.userName}"/>
+            app:srcCompat="@drawable/icon_indicator_username"
+            bind:visible_content="@{accountViewModel.userName}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_email"
@@ -64,11 +67,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_user_name"
-            app:srcCompat="@mipmap/ic_launcher"
-            bind:visible_editable="@{accountViewModel.editable}"
-            bind:visible_content="@{accountViewModel.email}"/>
+            app:srcCompat="@drawable/icon_indicator_email"
+            bind:visible_content="@{accountViewModel.email}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_remark"
@@ -76,11 +80,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_email"
-            app:srcCompat="@mipmap/ic_launcher"
-            bind:visible_editable="@{accountViewModel.editable}"
-            bind:visible_content="@{accountViewModel.remark}"/>
+            app:srcCompat="@drawable/icon_indicator_remark"
+            bind:visible_content="@{accountViewModel.remark}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_account"
