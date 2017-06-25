@@ -19,7 +19,7 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends Fragment implements AccountViewModel.PasswordButtonClickListener{
+public class AccountFragment extends Fragment implements AccountViewModel.PasswordButtonClickListener {
 
     private AccountViewModel mAccountViewModel;
     private AccountFragmentBinding mBinding;
@@ -28,7 +28,7 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         // Required empty public constructor
     }
 
-    public static AccountFragment newInstance(AccountViewModel accountViewModel){
+    public static AccountFragment newInstance(AccountViewModel accountViewModel) {
         AccountFragment fragment = new AccountFragment();
         fragment.mAccountViewModel = accountViewModel;
         return fragment;
@@ -53,9 +53,9 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         copyToClipboard(mAccountViewModel.getPassword());
     }
 
-    private void copyToClipboard(String str){
+    private void copyToClipboard(String str) {
         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-        android.content.ClipData clip = android.content.ClipData.newPlainText("text label",str);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("text label", str);
         clipboard.setPrimaryClip(clip);
     }
 }

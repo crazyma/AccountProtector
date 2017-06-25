@@ -1,7 +1,6 @@
 package com.beibeilab.accountprotector.feature.addaccount;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -9,15 +8,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.android.colorpicker.ColorPickerDialog;
 import com.android.colorpicker.ColorPickerSwatch;
@@ -44,7 +40,7 @@ import timber.log.Timber;
 public class AddAccountFragment extends Fragment implements
         PasswordGenerateFragment.PasswordGenerateListener, AddAccountFragmentCallback,
         AccountViewModel.PasswordButtonClickListener,
-        ColorPickerSwatch.OnColorSelectedListener{
+        ColorPickerSwatch.OnColorSelectedListener {
 
     private AddAccountBinding mBinding;
     private AccountViewModel accountViewModel;
@@ -113,7 +109,7 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_save_account){
+        if (item.getItemId() == R.id.action_save_account) {
             accountViewModel.commitNewAccount(getContext());
         }
         return super.onOptionsItemSelected(item);
@@ -164,18 +160,5 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public void onColorSelected(int color) {
         accountViewModel.setColor(color);
-        setupToolbarColor(color);
-    }
-
-    private void setupToolbarColor(int color){
-        AppCompatActivity activity = (AppCompatActivity)getActivity();
-
-        Window window = activity.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(color);
-
-        activity.getSupportActionBar().setBackgroundDrawable(
-                new ColorDrawable(color)
-        );
     }
 }

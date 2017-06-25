@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
@@ -148,7 +147,7 @@ public class MainFragment extends LifecycleFragment implements Runnable {
 
             AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
             Timber.d("on click " + accountViewModel);
-            
+
             AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -157,5 +156,4 @@ public class MainFragment extends LifecycleFragment implements Runnable {
             fragmentTransaction.commit();
         }
     };
-
 }
