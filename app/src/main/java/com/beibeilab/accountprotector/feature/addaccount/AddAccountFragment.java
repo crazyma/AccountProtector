@@ -1,6 +1,7 @@
 package com.beibeilab.accountprotector.feature.addaccount;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -8,12 +9,15 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.android.colorpicker.ColorPickerDialog;
 import com.android.colorpicker.ColorPickerSwatch;
@@ -39,7 +43,8 @@ import timber.log.Timber;
  */
 public class AddAccountFragment extends Fragment implements
         PasswordGenerateFragment.PasswordGenerateListener, AddAccountFragmentCallback,
-        AccountViewModel.PasswordButtonClickListener{
+        AccountViewModel.PasswordButtonClickListener,
+        ColorPickerSwatch.OnColorSelectedListener{
 
     private AddAccountBinding mBinding;
     private AccountViewModel viewModel;
@@ -126,7 +131,6 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public void onPickerButtonClicked(View view) {
-        Timber.d("PICKER!");
 
         int[] colors = getContext().getResources().getIntArray(R.array.androidcolors);
         int selectedColor = colors[0];
@@ -138,12 +142,7 @@ public class AddAccountFragment extends Fragment implements
                 selectedColor,
                 4, colors.length);
         colorPickerDialog.show(getFragmentManager(), "color_picker");
-        colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-            @Override
-            public void onColorSelected(int color) {
-                Timber.d("color : " + color);
-            }
-        });
+        colorPickerDialog.setOnColorSelectedListener(this);
     }
 
     @Override
@@ -160,5 +159,22 @@ public class AddAccountFragment extends Fragment implements
         DialogFragment newFragment = PasswordGenerateFragment.newInstance();
         newFragment.setTargetFragment(this, 0);
         newFragment.show(ft, "dialog");
+    }
+
+    @Override
+    public void onColorSelected(int color) {
+        setupToolbarColor(color);
+    }
+
+    private void setupToolbarColor(int color){
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
+
+        Window window = activity.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
+
+        activity.getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(color)
+        );
     }
 }
