@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.colorpicker.ColorPickerDialog;
+import com.android.colorpicker.ColorPickerSwatch;
 import com.beibeilab.accountprotector.feature.password.PasswordGenerateFragment;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AddAccountBinding;
@@ -120,6 +122,28 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public void onInsertSuccessfully() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onPickerButtonClicked(View view) {
+        Timber.d("PICKER!");
+
+        int[] colors = getContext().getResources().getIntArray(R.array.androidcolors);
+        int selectedColor = colors[0];
+
+        ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
+        colorPickerDialog.initialize(
+                R.string.dialog_color_picker_title,
+                colors,
+                selectedColor,
+                4, colors.length);
+        colorPickerDialog.show(getFragmentManager(), "color_picker");
+        colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
+            @Override
+            public void onColorSelected(int color) {
+                Timber.d("color : " + color);
+            }
+        });
     }
 
     @Override
