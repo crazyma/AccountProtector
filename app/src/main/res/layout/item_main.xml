@@ -28,8 +28,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_secure"
-            bind:ovalColor="@{@color/silver}"/>
+            app:srcCompat="@drawable/icon_lock"
+            bind:ovalColor="@{itemModel.color}"/>
 
         <TextView
             android:id="@+id/text_account_name"

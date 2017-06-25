@@ -19,7 +19,7 @@ import timber.log.Timber;
 public class MainItemViewModel {
     private String textName;
     private Drawable drawableIcon;
-    private int resOauthIcon, position;
+    private int resOauthIcon, position, color;
     private View.OnClickListener itemClickListener;
 
     public MainItemViewModel() {
@@ -27,6 +27,14 @@ public class MainItemViewModel {
 
     public MainItemViewModel(AccountEntity accountEntity) {
         setByAccountEntity(accountEntity);
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public String getTextName() {
@@ -71,6 +79,7 @@ public class MainItemViewModel {
 
     public void setByAccountEntity(AccountEntity accountEntity){
         textName = accountEntity.getServiceName();
+        color = accountEntity.getColor();
         if(accountEntity.getOauth() != null) {
             switch (accountEntity.getOauth()) {
                 case AccountUnit.OAUTH_GOOGLE:
@@ -88,12 +97,6 @@ public class MainItemViewModel {
                 default:
             }
         }
-    }
-
-    @BindingAdapter({"ovalColor"})
-    public static void setOvalBackground(ImageView imageView, int color){
-        Drawable drawable = Util.createOvalDrawable(color, imageView.getLayoutParams().width);
-        imageView.setBackground(drawable);
     }
 
     @BindingAdapter({"oauthIcon"})

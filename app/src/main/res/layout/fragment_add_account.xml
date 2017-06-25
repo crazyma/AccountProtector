@@ -46,14 +46,14 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginTop="24dp"
                 android:background="@color/colorPrimary"
                 android:onClick="@{callback::onPickerButtonClicked}"
                 android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/icon_color_picker"
-                bind:oval_color="@{accountViewModel.color}"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="24dp" />
+                app:srcCompat="@drawable/icon_color_picker"
+                bind:ovalColor="@{accountViewModel.color}" />
 
             <View
                 android:id="@+id/view_divider1"
@@ -153,11 +153,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:accountViewModel="@{accountViewModel}"
-                app:passwordClickListener="@{passwordClickListener}"
                 app:callback="@{callback}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
+                app:layout_constraintTop_toBottomOf="@+id/view_divider2"
+                app:passwordClickListener="@{passwordClickListener}" />
 
         </android.support.constraint.ConstraintLayout>
 
