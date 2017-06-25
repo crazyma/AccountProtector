@@ -5,6 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,6 +33,10 @@ import timber.log.Timber;
  */
 
 public class AccountViewModel extends BaseObservable {
+
+    public interface PasswordButtonClickListener{
+        void onPasswordButtonClick(View view);
+    }
 
     private String account, password, userName, email, remark, serviceName;
     private AddAccountFragmentCallback callback;
@@ -319,6 +324,18 @@ public class AccountViewModel extends BaseObservable {
                     imageView.setImageResource(R.drawable.google);
             }
         }
+    }
+
+    @BindingAdapter({"visible_editable","visible_content"})
+    public static void setVisibleByEditable(View view, boolean editable, String content){
+        if(!editable){
+            if(!Util.validString(content)){
+                view.setVisibility(View.GONE);
+                return;
+            }
+        }
+
+        view.setVisibility(View.VISIBLE);
     }
 
     public void setCallback(AddAccountFragmentCallback callback) {

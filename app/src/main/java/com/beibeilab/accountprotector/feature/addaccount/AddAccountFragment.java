@@ -36,7 +36,8 @@ import timber.log.Timber;
  * A simple {@link Fragment} subclass.
  */
 public class AddAccountFragment extends Fragment implements
-        PasswordGenerateFragment.PasswordGenerateListener, AddAccountFragmentCallback{
+        PasswordGenerateFragment.PasswordGenerateListener, AddAccountFragmentCallback,
+        AccountViewModel.PasswordButtonClickListener{
 
     private AddAccountBinding mBinding;
     private AccountViewModel viewModel;
@@ -58,6 +59,7 @@ public class AddAccountFragment extends Fragment implements
         viewModel.setCallback(this);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
         mBinding.setAccountViewModel(viewModel);
+        mBinding.setPasswordClickListener(this);
         mBinding.setCallback(this);
 
         return mBinding.getRoot();
@@ -116,7 +118,12 @@ public class AddAccountFragment extends Fragment implements
     }
 
     @Override
-    public void onCreatePGDialog(View view) {
+    public void onInsertSuccessfully() {
+        getActivity().finish();
+    }
+
+    @Override
+    public void onPasswordButtonClick(View view) {
         FragmentActivity activity = getActivity();
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
         Fragment prev = activity.getSupportFragmentManager().findFragmentByTag("dialog");
@@ -129,10 +136,5 @@ public class AddAccountFragment extends Fragment implements
         DialogFragment newFragment = PasswordGenerateFragment.newInstance();
         newFragment.setTargetFragment(this, 0);
         newFragment.show(ft, "dialog");
-    }
-
-    @Override
-    public void onInsertSuccessfully() {
-        getActivity().finish();
     }
 }

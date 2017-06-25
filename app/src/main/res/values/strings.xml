@@ -19,6 +19,9 @@
     <string name="action_save_account">SAVE</string>
     <string name="action_edit_account">EDIT</string>
 
+    <string name="btn_create_password">MAKE</string>
+    <string name="btn_copy_password">COPY</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="warning_no_parameter">請至少填選一則資訊</string>

@@ -13,6 +13,10 @@
         <variable
             name="callback"
             type="com.beibeilab.accountprotector.feature.addaccount.AddAccountFragmentCallback" />
+
+        <variable
+            name="passwordClickListener"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener" />
     </data>
 
     <ScrollView
@@ -145,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:accountViewModel="@{accountViewModel}"
+                app:passwordClickListener="@{passwordClickListener}"
                 app:callback="@{callback}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

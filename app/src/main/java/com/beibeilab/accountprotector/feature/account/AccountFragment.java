@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
@@ -17,7 +18,7 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment implements AccountViewModel.PasswordButtonClickListener{
 
     private AccountViewModel mAccountViewModel;
     private AccountFragmentBinding mBinding;
@@ -40,8 +41,15 @@ public class AccountFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false);
         mAccountViewModel.setEditable(false);
         mBinding.setAccountViewModel(mAccountViewModel);
+        mBinding.setPasswordClickListener(this);
         Timber.d("account view model : " + mAccountViewModel.toString());
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onPasswordButtonClick(View view) {
+
+        Toast.makeText(getContext(), "COPY", Toast.LENGTH_LONG).show();
+
+    }
 }
