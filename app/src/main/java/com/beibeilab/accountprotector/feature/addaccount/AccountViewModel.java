@@ -463,7 +463,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
                 });
     }
 
-    private void setByAccountEntity(AccountEntity accountEntity) {
+    public void setByAccountEntity(AccountEntity accountEntity) {
         serviceName = accountEntity.getServiceName();
         account = accountEntity.getAccount();
         password = accountEntity.getPassword();

@@ -16,6 +16,7 @@ public class AddAccountActivity extends AppCompatActivity {
     public static final String PARAM_MODE = "mode";
     public static final int PARAM_NEW = 11;
     public static final int PARAM_EDIT = 12;
+    public static final int REQUEST_CODE_EDIT = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

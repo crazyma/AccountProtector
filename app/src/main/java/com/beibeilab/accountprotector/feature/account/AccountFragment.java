@@ -20,9 +20,15 @@ import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
 import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
+import com.beibeilab.accountprotector.room.AccountDatabase;
+import com.beibeilab.accountprotector.room.AccountEntity;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 
+import static android.app.Activity.RESULT_OK;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_EDIT;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_MODE;
@@ -65,6 +71,16 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == AddAccountActivity.REQUEST_CODE_EDIT &&
+                resultCode == RESULT_OK){
+
+            queryAccountEntity();
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Add your menu entries here
         super.onCreateOptionsMenu(menu, inflater);
@@ -87,6 +103,31 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         copyToClipboard(mAccountViewModel.getPassword());
     }
 
+    private void queryAccountEntity(){
+        AccountDatabase accountDatabase = AccountDatabase.getInstance(getContext());
+        accountDatabase.getAccountDao()
+                .getAccoutEntityByUid(mAccountViewModel.getUid())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<AccountEntity>() {
+                    @Override
+                    public void onNext(AccountEntity accountEntity) {
+                        mAccountViewModel.setByAccountEntity(accountEntity);
+                        mAccountViewModel.setEditable(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     private void copyToClipboard(String str) {
         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         android.content.ClipData clip = android.content.ClipData.newPlainText("text label", str);
@@ -97,6 +138,6 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         Intent intent = new Intent(getContext(), AddAccountActivity.class);
         intent.putExtra(PARAM_ACCOUNT_VIEW_MODEL, mAccountViewModel);
         intent.putExtra(PARAM_MODE, PARAM_EDIT);
-        startActivity(intent);
+        startActivityForResult(intent, AddAccountActivity.REQUEST_CODE_EDIT);
     }
 }

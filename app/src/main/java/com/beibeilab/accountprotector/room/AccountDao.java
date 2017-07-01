@@ -29,6 +29,9 @@ public interface AccountDao {
     @Query("SELECT * FROM accountEntity")
     LiveData<List<AccountEntity>> getAllFromLiveData();
 
+    @Query("SELECT * FROM accountEntity WHERE uid > :uid")
+    Flowable<AccountEntity> getAccoutEntityByUid(long uid);
+
     @Insert
     void insert(AccountEntity accountEntity);
 
