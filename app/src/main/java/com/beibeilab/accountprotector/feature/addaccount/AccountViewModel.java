@@ -349,6 +349,16 @@ public class AccountViewModel extends BaseObservable {
         view.setVisibility(View.VISIBLE);
     }
 
+    @BindingAdapter({"visible_content"})
+    public static void setVisibleByContent(View view, String content){
+        if(!Util.validString(content)){
+            view.setVisibility(View.GONE);
+            return;
+        }
+
+        view.setVisibility(View.VISIBLE);
+    }
+
     public void setCallback(AddAccountFragmentCallback callback) {
         this.callback = callback;
     }
