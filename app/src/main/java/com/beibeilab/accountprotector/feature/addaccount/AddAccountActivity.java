@@ -9,6 +9,8 @@ import com.beibeilab.accountprotector.R;
 
 public class AddAccountActivity extends AppCompatActivity {
 
+    public static final String PARAM_ACCOUNT_VIEW_MODEL = "account_view_model";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

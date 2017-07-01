@@ -23,6 +23,8 @@ import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
 
 import timber.log.Timber;
 
+import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -91,6 +93,7 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
 
     private void jump2Edit() {
         Intent intent = new Intent(getContext(), AddAccountActivity.class);
+        intent.putExtra(PARAM_ACCOUNT_VIEW_MODEL, mAccountViewModel);
         startActivity(intent);
     }
 }

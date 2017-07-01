@@ -4,6 +4,8 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -29,7 +31,7 @@ import timber.log.Timber;
  * Created by david on 2017/6/9.
  */
 
-public class AccountViewModel extends BaseObservable {
+public class AccountViewModel extends BaseObservable implements Parcelable {
 
     public interface PasswordButtonClickListener {
         void onPasswordButtonClick(View view);
@@ -39,6 +41,28 @@ public class AccountViewModel extends BaseObservable {
     private String account, password, userName, email, remark, serviceName, oauth;
     private int color;
 
+    public static final Creator<AccountViewModel> CREATOR = new Creator<AccountViewModel>() {
+        @Override
+        public AccountViewModel createFromParcel(Parcel in) {
+            AccountViewModel accountViewModel = new AccountViewModel();
+            accountViewModel.setAccount(in.readString());
+            accountViewModel.setPassword(in.readString());
+            accountViewModel.setUserName(in.readString());
+            accountViewModel.setEmail(in.readString());
+            accountViewModel.setRemark(in.readString());
+            accountViewModel.setServiceName(in.readString());
+            accountViewModel.setOauth(in.readString());
+            accountViewModel.setColor(in.readInt());
+
+            return accountViewModel;
+        }
+
+        @Override
+        public AccountViewModel[] newArray(int size) {
+            return new AccountViewModel[size];
+        }
+    };
+
     private AddAccountFragmentCallback callback;
     private boolean editable;
 
@@ -47,6 +71,17 @@ public class AccountViewModel extends BaseObservable {
 
     public AccountViewModel(AccountEntity accountEntity) {
         setByAccountEntity(accountEntity);
+    }
+
+    protected AccountViewModel(Parcel in) {
+        account = in.readString();
+        password = in.readString();
+        userName = in.readString();
+        email = in.readString();
+        remark = in.readString();
+        serviceName = in.readString();
+        oauth = in.readString();
+        color = in.readInt();
     }
 
     public void commitButtonClicked(final View view) {
@@ -453,5 +488,22 @@ public class AccountViewModel extends BaseObservable {
         builder.append(color);
 
         return builder.toString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(account);
+        parcel.writeString(password);
+        parcel.writeString(userName);
+        parcel.writeString(email);
+        parcel.writeString(remark);
+        parcel.writeString(serviceName);
+        parcel.writeString(oauth);
+        parcel.writeInt(color);
     }
 }

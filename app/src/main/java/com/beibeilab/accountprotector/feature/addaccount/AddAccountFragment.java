@@ -35,6 +35,8 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 
+import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -58,10 +60,15 @@ public class AddAccountFragment extends Fragment implements
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        accountViewModel = new AccountViewModel();
+        accountViewModel = getActivity().getIntent().getParcelableExtra(PARAM_ACCOUNT_VIEW_MODEL);
+
+        if(accountViewModel == null) {
+            accountViewModel = new AccountViewModel();
+            accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        }
+
         accountViewModel.setEditable(true);
         accountViewModel.setCallback(this);
-        accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_account, container, false);
         mBinding.setAccountViewModel(accountViewModel);
         mBinding.setPasswordClickListener(this);
