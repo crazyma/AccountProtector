@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.feature.account.AccountUnit;
+import com.beibeilab.accountprotector.room.AccountDao;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 import com.beibeilab.accountprotector.room.AccountEntityBuilder;
@@ -40,6 +41,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
     /*  member  */
     private String account, password, userName, email, remark, serviceName, oauth;
     private int color;
+    private long uid;
 
     public static final Creator<AccountViewModel> CREATOR = new Creator<AccountViewModel>() {
         @Override
@@ -53,6 +55,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
             accountViewModel.setServiceName(in.readString());
             accountViewModel.setOauth(in.readString());
             accountViewModel.setColor(in.readInt());
+            accountViewModel.setUid(in.readLong());
 
             return accountViewModel;
         }
@@ -82,10 +85,11 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         serviceName = in.readString();
         oauth = in.readString();
         color = in.readInt();
+        uid = in.readLong();
     }
 
     public void commitButtonClicked(final View view) {
-        commitNewAccount(view.getContext());
+
     }
 
     public TextWatcher addServiceNameTextWatcher = new TextWatcher() {
@@ -189,6 +193,14 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
             remark = editable.toString();
         }
     };
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
 
     @Bindable
     public String getPassword() {
@@ -405,7 +417,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         this.callback = callback;
     }
 
-    public void commitNewAccount(final Context context) {
+    public void commitAccount(final Context context, final boolean isInsert) {
         final AccountEntityBuilder builder = new AccountEntityBuilder();
         builder.setServiceName(serviceName);
         builder.setAccount(account);
@@ -415,13 +427,22 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         builder.setRemark(remark);
         builder.setOauth(oauth);
         builder.setColor(color);
+        if(isInsert == false){
+            builder.setUid(this.uid);
+        }
 
         Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
+                AccountDao dao =
                 AccountDatabase.getInstance(context)
-                        .getAccountDao()
-                        .insert(builder.build());
+                        .getAccountDao();
+
+                if(isInsert){
+                    dao.insert(builder.build());
+                }else{
+                    dao.update(builder.build());
+                }
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -451,6 +472,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         remark = accountEntity.getRemark();
         color = accountEntity.getColor();
         oauth = accountEntity.getOauth();
+        uid = accountEntity.getUid();
     }
 
     @Override
@@ -486,6 +508,8 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         }
         builder.append(", color: ");
         builder.append(color);
+        builder.append(", uid: ");
+        builder.append(uid);
 
         return builder.toString();
     }
@@ -505,5 +529,6 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         parcel.writeString(serviceName);
         parcel.writeString(oauth);
         parcel.writeInt(color);
+        parcel.writeLong(uid);
     }
 }

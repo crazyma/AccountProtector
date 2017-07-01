@@ -32,6 +32,9 @@ public interface AccountDao {
     @Insert
     void insert(AccountEntity accountEntity);
 
+    @Update
+    void update(AccountEntity accountEntity);
+
     @Delete
     void delete(AccountEntity accountEntity);
 

@@ -22,7 +22,6 @@ import com.beibeilab.accountprotector.feature.password.PasswordGenerateFragment;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
-import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +32,7 @@ public class AddAccountFragment extends Fragment implements
         ColorPickerSwatch.OnColorSelectedListener {
 
     private AddAccountBinding mBinding;
-    private AccountViewModel accountViewModel;
+    protected AccountViewModel accountViewModel;
 
     private AccountDatabase accountDatabase;
 
@@ -47,12 +46,7 @@ public class AddAccountFragment extends Fragment implements
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        accountViewModel = getActivity().getIntent().getParcelableExtra(PARAM_ACCOUNT_VIEW_MODEL);
-
-        if(accountViewModel == null) {
-            accountViewModel = new AccountViewModel();
-            accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        }
+        accountViewModel = getAccountViewModel();
 
         accountViewModel.setEditable(true);
         accountViewModel.setCallback(this);
@@ -81,7 +75,7 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save_account) {
-            accountViewModel.commitNewAccount(getContext());
+            accountViewModel.commitAccount(getContext(), true);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -131,5 +125,11 @@ public class AddAccountFragment extends Fragment implements
     @Override
     public void onColorSelected(int color) {
         accountViewModel.setColor(color);
+    }
+
+    protected AccountViewModel getAccountViewModel() {
+        AccountViewModel accountViewModel = new AccountViewModel();
+        accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        return accountViewModel;
     }
 }

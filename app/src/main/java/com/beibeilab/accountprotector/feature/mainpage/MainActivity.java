@@ -12,6 +12,10 @@ import android.view.View;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 
+import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_EDIT;
+import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_MODE;
+import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_NEW;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void jumpToAddAccount(){
         Intent intent = new Intent(this, AddAccountActivity.class);
+        intent.putExtra(PARAM_MODE, PARAM_NEW);
         startActivity(intent);
     }
 
