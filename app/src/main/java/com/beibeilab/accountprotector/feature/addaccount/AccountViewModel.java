@@ -4,13 +4,9 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
-import android.databinding.ObservableField;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,14 +31,15 @@ import timber.log.Timber;
 
 public class AccountViewModel extends BaseObservable {
 
-    public interface PasswordButtonClickListener{
+    public interface PasswordButtonClickListener {
         void onPasswordButtonClick(View view);
     }
 
-    private String account, password, userName, email, remark, serviceName;
+    /*  member  */
+    private String account, password, userName, email, remark, serviceName, oauth;
     private int color;
+
     private AddAccountFragmentCallback callback;
-    final public ObservableField<String> oauth = new ObservableField<>();
     private boolean editable;
 
     public AccountViewModel() {
@@ -178,6 +175,16 @@ public class AccountViewModel extends BaseObservable {
         notifyPropertyChanged(BR.color);
     }
 
+    @Bindable
+    public String getOauth() {
+        return oauth;
+    }
+
+    public void setOauth(String oauth) {
+        this.oauth = oauth;
+        notifyPropertyChanged(BR.oauth);
+    }
+
     public String getAccount() {
         return account;
     }
@@ -246,19 +253,19 @@ public class AccountViewModel extends BaseObservable {
                 newOauth = AccountUnit.OAUTH_GOOGLE;
         }
 
-        if (oauth.get() != null && oauth.get().equals(newOauth)) {
-            oauth.set(null);
+        if (oauth != null && oauth.equals(newOauth)) {
+            setOauth(null);
         } else {
-            oauth.set(newOauth);
+            setOauth(newOauth);
         }
 
     }
 
     @BindingAdapter("oauth_icon")
-    public static void setOauthIcon(ImageView imageView, String oauth){
-        if(Util.validString(oauth)){
+    public static void setOauthIcon(ImageView imageView, String oauth) {
+        if (Util.validString(oauth)) {
             imageView.setVisibility(View.VISIBLE);
-            switch (oauth){
+            switch (oauth) {
                 case AccountUnit.OAUTH_GOOGLE:
                     imageView.setImageResource(R.drawable.icon_google);
                     break;
@@ -273,7 +280,7 @@ public class AccountViewModel extends BaseObservable {
                     break;
                 default:
             }
-        }else{
+        } else {
             imageView.setVisibility(View.INVISIBLE);
         }
     }
@@ -337,10 +344,10 @@ public class AccountViewModel extends BaseObservable {
         }
     }
 
-    @BindingAdapter({"visible_editable","visible_content"})
-    public static void setVisibleByEditable(View view, boolean editable, String content){
-        if(!editable){
-            if(!Util.validString(content)){
+    @BindingAdapter({"visible_editable", "visible_content"})
+    public static void setVisibleByEditable(View view, boolean editable, String content) {
+        if (!editable) {
+            if (!Util.validString(content)) {
                 view.setVisibility(View.GONE);
                 return;
             }
@@ -350,8 +357,8 @@ public class AccountViewModel extends BaseObservable {
     }
 
     @BindingAdapter({"visible_content"})
-    public static void setVisibleByContent(View view, String content){
-        if(!Util.validString(content)){
+    public static void setVisibleByContent(View view, String content) {
+        if (!Util.validString(content)) {
             view.setVisibility(View.GONE);
             return;
         }
@@ -363,7 +370,7 @@ public class AccountViewModel extends BaseObservable {
         this.callback = callback;
     }
 
-    public void commitNewAccount(final Context context){
+    public void commitNewAccount(final Context context) {
         final AccountEntityBuilder builder = new AccountEntityBuilder();
         builder.setServiceName(serviceName);
         builder.setAccount(account);
@@ -371,7 +378,7 @@ public class AccountViewModel extends BaseObservable {
         builder.setUserName(userName);
         builder.setEmail(email);
         builder.setRemark(remark);
-        builder.setOauth(oauth.get());
+        builder.setOauth(oauth);
         builder.setColor(color);
 
         Completable.fromAction(new Action() {
@@ -388,7 +395,7 @@ public class AccountViewModel extends BaseObservable {
                     @Override
                     public void onComplete() {
                         Timber.d("insert completed");
-                        if(callback != null)
+                        if (callback != null)
                             callback.onInsertSuccessfully();
                     }
 
@@ -400,7 +407,7 @@ public class AccountViewModel extends BaseObservable {
                 });
     }
 
-    private void setByAccountEntity(AccountEntity accountEntity){
+    private void setByAccountEntity(AccountEntity accountEntity) {
         serviceName = accountEntity.getServiceName();
         account = accountEntity.getAccount();
         password = accountEntity.getPassword();
@@ -408,7 +415,7 @@ public class AccountViewModel extends BaseObservable {
         email = accountEntity.getEmail();
         remark = accountEntity.getRemark();
         color = accountEntity.getColor();
-        oauth.set(accountEntity.getOauth());
+        oauth = accountEntity.getOauth();
     }
 
     @Override
@@ -418,27 +425,27 @@ public class AccountViewModel extends BaseObservable {
         builder.append("service name: ");
         builder.append(serviceName);
 
-        if(oauth.get() != null) {
+        if (oauth != null) {
             builder.append(", oauth: ");
-            builder.append(oauth.get());
+            builder.append(oauth);
         }
-        if(account != null) {
+        if (account != null) {
             builder.append(", account: ");
             builder.append(account);
         }
-        if(email != null) {
+        if (email != null) {
             builder.append(", email: ");
             builder.append(email);
         }
-        if(password != null) {
+        if (password != null) {
             builder.append(", password: ");
             builder.append(password);
         }
-        if(userName != null) {
+        if (userName != null) {
             builder.append(", userName: ");
             builder.append(userName);
         }
-        if(remark != null) {
+        if (remark != null) {
             builder.append(", remark: ");
             builder.append(remark);
         }
