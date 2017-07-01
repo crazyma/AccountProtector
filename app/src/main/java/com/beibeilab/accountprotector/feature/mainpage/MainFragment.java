@@ -1,8 +1,10 @@
 package com.beibeilab.accountprotector.feature.mainpage;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
@@ -79,6 +81,7 @@ public class MainFragment extends LifecycleFragment implements Runnable {
 
                     MainItemViewModel viewModel = new MainItemViewModel(accountEntity);
                     viewModel.setItemClickListener(itemClickListener);
+                    viewModel.setItemLongClickListener(itemLongClickListener);
                     viewModel.setPosition(i);
                     mainItemViewModelList.add(viewModel);
                 }
@@ -156,4 +159,32 @@ public class MainFragment extends LifecycleFragment implements Runnable {
             fragmentTransaction.commit();
         }
     };
+
+    private View.OnLongClickListener itemLongClickListener = new View.OnLongClickListener(){
+
+        @Override
+        public boolean onLongClick(View view) {
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.dialog_title)
+                    .setMessage(R.string.dialog_delete_message)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .show();
+
+            return true;
+        }
+    };
+
+
 }

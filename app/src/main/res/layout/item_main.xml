@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:tag="@{itemModel.position}"
-        bind:itemClickListener="@{itemModel.itemClickListener}">
+        bind:itemClickListener="@{itemModel.itemClickListener}"
+        bind:itemLongClickListener="@{itemModel.itemLongClickListener}">
 
         <ImageView
             android:id="@+id/image_avatar"

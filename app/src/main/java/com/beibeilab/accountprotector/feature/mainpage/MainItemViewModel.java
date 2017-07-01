@@ -21,6 +21,7 @@ public class MainItemViewModel {
     private Drawable drawableIcon;
     private int resOauthIcon, position, color;
     private View.OnClickListener itemClickListener;
+    private View.OnLongClickListener itemLongClickListener;
 
     public MainItemViewModel() {
     }
@@ -69,6 +70,14 @@ public class MainItemViewModel {
         this.itemClickListener = itemClickListener;
     }
 
+    public View.OnLongClickListener getItemLongClickListener() {
+        return itemLongClickListener;
+    }
+
+    public void setItemLongClickListener(View.OnLongClickListener itemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -113,5 +122,10 @@ public class MainItemViewModel {
     public static void setOnItemClickListener(View view, View.OnClickListener clickListener){
         Timber.d("setup item click listener  |  " + clickListener.toString());
         view.setOnClickListener(clickListener);
+    }
+
+    @BindingAdapter("itemLongClickListener")
+    public static void setOnLongClickListener(View view, View.OnLongClickListener onLongClickListener){
+        view.setOnLongClickListener(onLongClickListener);
     }
 }
