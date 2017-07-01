@@ -68,4 +68,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddAccountActivity.class);
         startActivity(intent);
     }
+
+    public void showFAB(){
+        findViewById(R.id.fab).setVisibility(View.VISIBLE);
+    }
+
+    public void hideFAB(){
+        findViewById(R.id.fab).setVisibility(View.GONE);
+    }
 }

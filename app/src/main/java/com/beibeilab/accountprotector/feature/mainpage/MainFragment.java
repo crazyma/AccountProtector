@@ -69,8 +69,9 @@ public class MainFragment extends LifecycleFragment implements Runnable {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = mBinding.recyclerViewMain;
+        ((MainActivity)getActivity()).showFAB();
 
+        mRecyclerView = mBinding.recyclerViewMain;
         setupRecyclerView();
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
+import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
 
 import timber.log.Timber;
 
@@ -45,6 +47,12 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         mBinding.setPasswordClickListener(this);
         Timber.d("account view model : " + mAccountViewModel.toString());
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((MainActivity)getActivity()).hideFAB();
     }
 
     @Override
