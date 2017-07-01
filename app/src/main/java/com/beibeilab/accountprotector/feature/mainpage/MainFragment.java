@@ -69,7 +69,7 @@ public class MainFragment extends LifecycleFragment implements Runnable {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainActivity)getActivity()).showFAB();
+        ((MainActivity) getActivity()).showFAB();
 
         mRecyclerView = mBinding.recyclerViewMain;
         setupRecyclerView();
@@ -167,7 +167,7 @@ public class MainFragment extends LifecycleFragment implements Runnable {
         }
     };
 
-    private View.OnLongClickListener itemLongClickListener = new View.OnLongClickListener(){
+    private View.OnLongClickListener itemLongClickListener = new View.OnLongClickListener() {
 
         @Override
         public boolean onLongClick(View view) {
@@ -194,7 +194,7 @@ public class MainFragment extends LifecycleFragment implements Runnable {
         }
     };
 
-    private void deleteAccount(final AccountEntity accountEntity){
+    private void deleteAccount(final AccountEntity accountEntity) {
 
         Completable.fromCallable(new Callable<Object>() {
             @Override

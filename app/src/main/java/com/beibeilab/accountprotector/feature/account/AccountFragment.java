@@ -1,12 +1,16 @@
 package com.beibeilab.accountprotector.feature.account;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
+import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
 
 import timber.log.Timber;
@@ -52,7 +57,24 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainActivity)getActivity()).hideFAB();
+        ((MainActivity) getActivity()).hideFAB();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_account, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit_account) {
+            jump2Edit();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -65,5 +87,10 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         android.content.ClipData clip = android.content.ClipData.newPlainText("text label", str);
         clipboard.setPrimaryClip(clip);
+    }
+
+    private void jump2Edit() {
+        Intent intent = new Intent(getContext(), AddAccountActivity.class);
+        startActivity(intent);
     }
 }
