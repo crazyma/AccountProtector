@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.beibeilab.accountprotector.BR;
 import com.beibeilab.accountprotector.R;
@@ -25,7 +26,12 @@ import com.beibeilab.accountprotector.room.AccountEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -164,14 +170,15 @@ public class MainFragment extends LifecycleFragment implements Runnable {
 
         @Override
         public boolean onLongClick(View view) {
-
+            final int index = (int) view.getTag();
             new AlertDialog.Builder(getContext())
                     .setTitle(R.string.dialog_title)
                     .setMessage(R.string.dialog_delete_message)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            List<AccountEntity> accountEntityList = liveData.getValue();
+                            deleteAccount(accountEntityList.get(index));
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -185,6 +192,29 @@ public class MainFragment extends LifecycleFragment implements Runnable {
             return true;
         }
     };
+
+    private void deleteAccount(final AccountEntity accountEntity){
+
+        Completable.fromCallable(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                accountDatabase.getAccountDao().delete(accountEntity);
+                return null;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(getContext(), "Deleted", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "Delete Fail", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 
 
 }
