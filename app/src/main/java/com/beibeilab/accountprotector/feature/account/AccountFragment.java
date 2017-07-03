@@ -1,5 +1,8 @@
 package com.beibeilab.accountprotector.feature.account;
 
+import android.arch.lifecycle.LifecycleFragment;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -23,11 +26,6 @@ import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DisposableSubscriber;
-import timber.log.Timber;
-
 import static android.app.Activity.RESULT_OK;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_EDIT;
@@ -36,10 +34,11 @@ import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivi
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends Fragment implements AccountViewModel.PasswordButtonClickListener {
+public class AccountFragment extends LifecycleFragment implements AccountViewModel.PasswordButtonClickListener {
 
     private AccountViewModel mAccountViewModel;
     private AccountFragmentBinding mBinding;
+    private LiveData<AccountEntity> liveData;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -60,7 +59,7 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         mAccountViewModel.setEditable(false);
         mBinding.setAccountViewModel(mAccountViewModel);
         mBinding.setPasswordClickListener(this);
-        Timber.d("account view model : " + mAccountViewModel.toString());
+
         return mBinding.getRoot();
     }
 
@@ -73,8 +72,8 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == AddAccountActivity.REQUEST_CODE_EDIT &&
-                resultCode == RESULT_OK){
+        if (requestCode == AddAccountActivity.REQUEST_CODE_EDIT &&
+                resultCode == RESULT_OK) {
 
             queryAccountEntity();
         }
@@ -103,29 +102,17 @@ public class AccountFragment extends Fragment implements AccountViewModel.Passwo
         copyToClipboard(mAccountViewModel.getPassword());
     }
 
-    private void queryAccountEntity(){
+    private void queryAccountEntity() {
+
         AccountDatabase accountDatabase = AccountDatabase.getInstance(getContext());
-        accountDatabase.getAccountDao()
-                .getAccoutEntityByUid(mAccountViewModel.getUid())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<AccountEntity>() {
-                    @Override
-                    public void onNext(AccountEntity accountEntity) {
-                        mAccountViewModel.setByAccountEntity(accountEntity);
-                        mAccountViewModel.setEditable(false);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        liveData = accountDatabase.getAccountDao().getAccoutEntityByUid(mAccountViewModel.getUid());
+        liveData.observe(this, new Observer<AccountEntity>() {
+            @Override
+            public void onChanged(@Nullable AccountEntity accountEntity) {
+                mAccountViewModel.setByAccountEntity(accountEntity);
+                mAccountViewModel.setEditable(false);
+            }
+        });
     }
 
     private void copyToClipboard(String str) {

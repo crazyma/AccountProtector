@@ -232,44 +232,54 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.oauth);
     }
 
+    @Bindable
     public String getAccount() {
         return account;
     }
 
     public void setAccount(String account) {
         this.account = account;
+        notifyPropertyChanged(BR.account);
     }
 
+    @Bindable
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
+        notifyPropertyChanged(BR.userName);
     }
 
+    @Bindable
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+        notifyPropertyChanged(BR.email);
     }
 
+    @Bindable
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+        notifyPropertyChanged(BR.remark);
     }
 
+    @Bindable
     public String getServiceName() {
         return serviceName;
     }
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+        notifyPropertyChanged(BR.serviceName);
     }
 
     public boolean isEditable() {
@@ -427,7 +437,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         builder.setRemark(remark);
         builder.setOauth(oauth);
         builder.setColor(color);
-        if(isInsert == false){
+        if (isInsert == false) {
             builder.setUid(this.uid);
         }
 
@@ -435,12 +445,12 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
             @Override
             public void run() throws Exception {
                 AccountDao dao =
-                AccountDatabase.getInstance(context)
-                        .getAccountDao();
+                        AccountDatabase.getInstance(context)
+                                .getAccountDao();
 
-                if(isInsert){
+                if (isInsert) {
                     dao.insert(builder.build());
-                }else{
+                } else {
                     dao.update(builder.build());
                 }
             }
@@ -464,14 +474,14 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
     }
 
     public void setByAccountEntity(AccountEntity accountEntity) {
-        serviceName = accountEntity.getServiceName();
-        account = accountEntity.getAccount();
-        password = accountEntity.getPassword();
-        userName = accountEntity.getUserName();
-        email = accountEntity.getEmail();
-        remark = accountEntity.getRemark();
-        color = accountEntity.getColor();
-        oauth = accountEntity.getOauth();
+        setServiceName(accountEntity.getServiceName());
+        setAccount(accountEntity.getAccount());
+        setPassword(accountEntity.getPassword());
+        setUserName(accountEntity.getUserName());
+        setEmail(accountEntity.getEmail());
+        setRemark(accountEntity.getRemark());
+        setColor(accountEntity.getColor());
+        setOauth(accountEntity.getOauth());
         uid = accountEntity.getUid();
     }
 

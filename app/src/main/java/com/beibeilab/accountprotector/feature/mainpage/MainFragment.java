@@ -33,12 +33,11 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends LifecycleFragment{
+public class MainFragment extends LifecycleFragment {
 
     private MainFragmentBinding mBinding;
     private MainListViewModel viewModel;
@@ -87,8 +86,6 @@ public class MainFragment extends LifecycleFragment{
         liveData.observe(MainFragment.this, new Observer<List<AccountEntity>>() {
             @Override
             public void onChanged(@Nullable List<AccountEntity> accountEntities) {
-                Timber.d("iiiiiiiii thread id " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
-                Timber.d("iiiiiiiii main thread ? " + (Looper.getMainLooper().getThread() == Thread.currentThread()));
 
                 List<MainItemViewModel> mainItemViewModelList = viewModel.getMainItemViewModelList();
                 mainItemViewModelList.clear();
@@ -103,14 +100,7 @@ public class MainFragment extends LifecycleFragment{
                     mainItemViewModelList.add(viewModel);
                 }
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRecyclerView.getAdapter().notifyDataSetChanged();
-                        Timber.d("iiiiiiiii thread id " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
-                        Timber.d("iiiiiiiii main thread ? " + (Looper.getMainLooper().getThread() == Thread.currentThread()));
-                    }
-                });
+                mRecyclerView.getAdapter().notifyDataSetChanged();
             }
         });
     }
@@ -157,7 +147,6 @@ public class MainFragment extends LifecycleFragment{
             List<AccountEntity> accountEntityList = liveData.getValue();
 
             AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
-            Timber.d("on click " + accountViewModel);
 
             AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
