@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -37,7 +38,7 @@ import timber.log.Timber;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends LifecycleFragment implements Runnable {
+public class MainFragment extends LifecycleFragment{
 
     private MainFragmentBinding mBinding;
     private MainListViewModel viewModel;
@@ -75,11 +76,20 @@ public class MainFragment extends LifecycleFragment implements Runnable {
         setupRecyclerView();
     }
 
-    @Override
-    public void run() {
+    private void setupRecyclerView() {
+        setupRecyclerViewWithLiveData();
+//        setupRecyclerViewWithSingleDaoInThread();
+    }
+
+    private void setupRecyclerViewWithLiveData() {
+        accountDatabase = AccountDatabase.getInstance(getContext());
+        liveData = accountDatabase.getAccountDao().getAllFromLiveData();
         liveData.observe(MainFragment.this, new Observer<List<AccountEntity>>() {
             @Override
             public void onChanged(@Nullable List<AccountEntity> accountEntities) {
+                Timber.d("iiiiiiiii thread id " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
+                Timber.d("iiiiiiiii main thread ? " + (Looper.getMainLooper().getThread() == Thread.currentThread()));
+
                 List<MainItemViewModel> mainItemViewModelList = viewModel.getMainItemViewModelList();
                 mainItemViewModelList.clear();
 
@@ -97,21 +107,12 @@ public class MainFragment extends LifecycleFragment implements Runnable {
                     @Override
                     public void run() {
                         mRecyclerView.getAdapter().notifyDataSetChanged();
+                        Timber.d("iiiiiiiii thread id " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
+                        Timber.d("iiiiiiiii main thread ? " + (Looper.getMainLooper().getThread() == Thread.currentThread()));
                     }
                 });
             }
         });
-    }
-
-    private void setupRecyclerView() {
-        setupRecyclerViewWithLiveData();
-//        setupRecyclerViewWithSingleDaoInThread();
-    }
-
-    private void setupRecyclerViewWithLiveData() {
-        accountDatabase = AccountDatabase.getInstance(getContext());
-        liveData = accountDatabase.getAccountDao().getAllFromLiveData();
-        new Thread(this).start();
     }
 
     private void setupRecyclerViewWithSingleDaoInThread() {
