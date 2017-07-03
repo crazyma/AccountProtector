@@ -7,11 +7,15 @@
 
         <variable
             name="accountViewModel"
-            type="com.beibeilab.accountprotector.feature.account.AccountViewModel" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel" />
+
+        <variable
+            name="passwordClickListener"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener"/>
 
         <variable
             name="callback"
-            type="com.beibeilab.accountprotector.feature.account.AddAccountFragmentCallback" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AddAccountFragmentCallback" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -24,9 +28,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@mipmap/ic_launcher"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_indicator_account"
+            bind:visible_content="@{accountViewModel.account}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_password"
@@ -34,9 +41,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_account"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/icon_indicator_password"
+            bind:visible_content="@{accountViewModel.password}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_user_name"
@@ -44,9 +54,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_password"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/icon_indicator_username"
+            bind:visible_content="@{accountViewModel.userName}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_email"
@@ -54,9 +67,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_user_name"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/icon_indicator_email"
+            bind:visible_content="@{accountViewModel.email}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <ImageView
             android:id="@+id/image_remark"
@@ -64,9 +80,12 @@
             android:layout_height="56dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
+            android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
             app:layout_constraintTop_toBottomOf="@+id/image_email"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@drawable/icon_indicator_remark"
+            bind:visible_content="@{accountViewModel.remark}"
+            bind:visible_editable="@{accountViewModel.editable}" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_account"
@@ -78,13 +97,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider2"
-            app:layout_constraintTop_toTopOf="@+id/image_account">
+            app:layout_constraintTop_toTopOf="@+id/image_account"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.account}">
 
             <EditText
                 android:id="@+id/edit_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_account"
+                android:text="@{accountViewModel.account}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addAccountTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -98,12 +121,15 @@
             app:hintTextAppearance="@style/TextInputHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_password">
+            app:layout_constraintTop_toTopOf="@+id/image_password"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.password}">
 
             <EditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_password"
                 android:text="@{accountViewModel.password}"
                 android:textColor="@color/edit_text_color"
@@ -119,13 +145,17 @@
             app:hintTextAppearance="@style/TextInputHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_user_name">
+            app:layout_constraintTop_toTopOf="@+id/image_user_name"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.userName}">
 
             <EditText
                 android:id="@+id/edit_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_user_name"
+                android:text="@{accountViewModel.userName}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addUserNameTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -139,13 +169,17 @@
             app:hintTextAppearance="@style/TextInputHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_email">
+            app:layout_constraintTop_toTopOf="@+id/image_email"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.email}">
 
             <EditText
                 android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_email"
+                android:text="@{accountViewModel.email}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addEmailTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
@@ -159,31 +193,37 @@
             app:hintTextAppearance="@style/TextInputHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_remark">
+            app:layout_constraintTop_toTopOf="@+id/image_remark"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.remark}">
 
             <EditText
                 android:id="@+id/edit_remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{accountViewModel.editable}"
                 android:hint="@string/hint_remark"
+                android:text="@{accountViewModel.remark}"
                 android:textColor="@color/edit_text_color"
                 bind:addTextChangedListener="@{accountViewModel.addRemarkTextWatcher}" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_password"
             android:layout_width="48dp"
             android:layout_height="28dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/stroke_green_background"
-            android:onClick="@{callback::onCreatePGDialog}"
-            android:text="MAKE"
+            android:onClick="@{passwordClickListener::onPasswordButtonClick}"
+            android:text="@{accountViewModel.editable ? @string/btn_create_password : @string/btn_copy_password}"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_input_password" />
+            app:layout_constraintTop_toTopOf="@+id/text_input_password"
+            bind:visible_editable="@{accountViewModel.editable}"
+            bind:visible_content="@{accountViewModel.password}"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

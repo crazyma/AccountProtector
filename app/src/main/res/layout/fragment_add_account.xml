@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class="AddAccountBinding">
 
         <variable
             name="accountViewModel"
-            type="com.beibeilab.accountprotector.feature.account.AccountViewModel" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel" />
 
         <variable
             name="callback"
-            type="com.beibeilab.accountprotector.feature.account.AddAccountFragmentCallback" />
+            type="com.beibeilab.accountprotector.feature.addaccount.AddAccountFragmentCallback" />
+
+        <variable
+            name="passwordClickListener"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,6 +35,7 @@
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="@string/fragemnt_title_account_name"
+                android:text="@{accountViewModel.serviceName}"
                 android:textColor="@color/edit_text_color"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,15 +43,18 @@
                 bind:addTextChangedListener="@{accountViewModel.addServiceNameTextWatcher}" />
 
             <ImageView
-                android:id="@+id/btn_commit"
+                android:id="@+id/btn_color_picker"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:onClick="@{accountViewModel::commitButtonClicked}"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorPrimary"
+                android:onClick="@{callback::onPickerButtonClicked}"
+                android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                app:srcCompat="@drawable/icon_color_picker"
+                bind:ovalColor="@{accountViewModel.color}" />
 
             <View
                 android:id="@+id/view_divider1"
@@ -82,8 +91,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_twitter"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/github"
-                bind:oauth_icon="@{accountViewModel.oauth}" />
+                app:srcCompat="@drawable/icon_github_pale"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <ImageView
                 android:id="@+id/image_twitter"
@@ -94,8 +103,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_facebook"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/twitter"
-                bind:oauth_icon="@{accountViewModel.oauth}"
+                app:srcCompat="@drawable/icon_twitter_pale"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="162dp" />
 
             <ImageView
@@ -107,8 +116,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/image_google"
                 app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/facebook"
-                bind:oauth_icon="@{accountViewModel.oauth}"
+                app:srcCompat="@drawable/icon_facebook_pale"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}"
                 tools:layout_editor_absoluteX="118dp" />
 
             <ImageView
@@ -122,8 +131,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider1"
-                app:srcCompat="@drawable/google"
-                bind:oauth_icon="@{accountViewModel.oauth}" />
+                app:srcCompat="@drawable/icon_google_pale"
+                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -144,11 +153,12 @@
                 layout="@layout/layout_attribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:accountViewModel="@{accountViewModel}"
+                app:callback="@{callback}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider2"
-                app:accountViewModel="@{accountViewModel}"
-                app:callback="@{callback}"/>
+                app:passwordClickListener="@{passwordClickListener}" />
 
         </android.support.constraint.ConstraintLayout>
 

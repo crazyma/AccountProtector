@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="AccountFragmentBinding">
+
+        <variable
+            name="accountViewModel"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel" />
+
+        <variable
+            name="passwordClickListener"
+            type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.beibeilab.accountprotector.feature.account.AccountFragment">
+
+        <include
+            android:id="@+id/layout_content"
+            layout="@layout/content_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:accountViewModel="@{accountViewModel}"
+            app:passwordClickListener="@{passwordClickListener}"/>
+
+    </ScrollView>
+</layout>

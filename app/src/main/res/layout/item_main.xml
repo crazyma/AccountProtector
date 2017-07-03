@@ -12,7 +12,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="72dp">
+        android:layout_height="72dp"
+        android:tag="@{itemModel.position}"
+        bind:itemClickListener="@{itemModel.itemClickListener}"
+        bind:itemLongClickListener="@{itemModel.itemLongClickListener}">
 
         <ImageView
             android:id="@+id/image_avatar"
@@ -26,8 +29,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_secure"
-            bind:ovalColor="@{@color/silver}"/>
+            app:srcCompat="@drawable/icon_lock"
+            bind:ovalColor="@{itemModel.color}"/>
 
         <TextView
             android:id="@+id/text_account_name"
