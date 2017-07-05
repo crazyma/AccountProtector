@@ -38,6 +38,9 @@ public class RecyclerViewBindingHelper {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(layoutResId, bindResId);
         adapter.setMainItemModelList(items);
         recyclerView.setAdapter(adapter);
+
+        recyclerView.addItemDecoration(
+        new MainRecyclerViewDecoration(recyclerView.getContext()));
     }
 
 
