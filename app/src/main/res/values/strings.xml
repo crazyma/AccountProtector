@@ -21,6 +21,7 @@
 
     <string name="btn_create_password">MAKE</string>
     <string name="btn_copy_password">COPY</string>
+    <string name="btn_add_more">新增其他資訊</string>
 
     <string name="dialog_color_picker_title">選擇顏色</string>
     <string name="dialog_title">提醒</string>

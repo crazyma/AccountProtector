@@ -68,6 +68,7 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
 
     private AddAccountFragmentCallback callback;
     private boolean editable;
+    private int addMoreButtonVisible;
 
     public AccountViewModel() {
     }
@@ -282,6 +283,16 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.serviceName);
     }
 
+    @Bindable
+    public int getAddMoreButtonVisible() {
+        return addMoreButtonVisible;
+    }
+
+    public void setAddMoreButtonVisible(int addMoreButtonVisible) {
+        this.addMoreButtonVisible = addMoreButtonVisible;
+        notifyPropertyChanged(BR.addMoreButtonVisible);
+    }
+
     public boolean isEditable() {
         return editable;
     }
@@ -316,6 +327,137 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
             setOauth(newOauth);
         }
 
+    }
+
+    public void setCallback(AddAccountFragmentCallback callback) {
+        this.callback = callback;
+    }
+
+    public void commitAccount(final Context context, final boolean isInsert) {
+        final AccountEntityBuilder builder = new AccountEntityBuilder();
+        builder.setServiceName(serviceName);
+        builder.setAccount(account);
+        builder.setPassword(password);
+        builder.setUserName(userName);
+        builder.setEmail(email);
+        builder.setRemark(remark);
+        builder.setOauth(oauth);
+        builder.setColor(color);
+        if (isInsert == false) {
+            builder.setUid(this.uid);
+        }
+
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                AccountDao dao =
+                        AccountDatabase.getInstance(context)
+                                .getAccountDao();
+
+                if (isInsert) {
+                    dao.insert(builder.build());
+                } else {
+                    dao.update(builder.build());
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Timber.d("insert completed");
+                        if (callback != null)
+                            callback.onInsertSuccessfully();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(context, R.string.warning_no_parameter, Toast.LENGTH_SHORT).show();
+                        Timber.e(e.toString());
+                    }
+                });
+    }
+
+    public void setByAccountEntity(AccountEntity accountEntity) {
+        setServiceName(accountEntity.getServiceName());
+        setAccount(accountEntity.getAccount());
+        setPassword(accountEntity.getPassword());
+        setUserName(accountEntity.getUserName());
+        setEmail(accountEntity.getEmail());
+        setRemark(accountEntity.getRemark());
+        setColor(accountEntity.getColor());
+        setOauth(accountEntity.getOauth());
+        uid = accountEntity.getUid();
+    }
+
+    public void modifyAddMoreButtonVisibility(){
+        if(Util.validString(getAccount()) ||
+                Util.validString(getUserName()) ||
+                Util.validString(getPassword()) ||
+                Util.validString(getEmail()) ||
+                Util.validString(getRemark())){
+            setAddMoreButtonVisible(View.GONE);
+        }else{
+            setAddMoreButtonVisible(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("service name: ");
+        builder.append(serviceName);
+
+        if (oauth != null) {
+            builder.append(", oauth: ");
+            builder.append(oauth);
+        }
+        if (account != null) {
+            builder.append(", account: ");
+            builder.append(account);
+        }
+        if (email != null) {
+            builder.append(", email: ");
+            builder.append(email);
+        }
+        if (password != null) {
+            builder.append(", password: ");
+            builder.append(password);
+        }
+        if (userName != null) {
+            builder.append(", userName: ");
+            builder.append(userName);
+        }
+        if (remark != null) {
+            builder.append(", remark: ");
+            builder.append(remark);
+        }
+        builder.append(", color: ");
+        builder.append(color);
+        builder.append(", uid: ");
+        builder.append(uid);
+
+        return builder.toString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(account);
+        parcel.writeString(password);
+        parcel.writeString(userName);
+        parcel.writeString(email);
+        parcel.writeString(remark);
+        parcel.writeString(serviceName);
+        parcel.writeString(oauth);
+        parcel.writeInt(color);
+        parcel.writeLong(uid);
     }
 
     @BindingAdapter("oauth_icon")
@@ -421,124 +563,5 @@ public class AccountViewModel extends BaseObservable implements Parcelable {
         }
 
         view.setVisibility(View.VISIBLE);
-    }
-
-    public void setCallback(AddAccountFragmentCallback callback) {
-        this.callback = callback;
-    }
-
-    public void commitAccount(final Context context, final boolean isInsert) {
-        final AccountEntityBuilder builder = new AccountEntityBuilder();
-        builder.setServiceName(serviceName);
-        builder.setAccount(account);
-        builder.setPassword(password);
-        builder.setUserName(userName);
-        builder.setEmail(email);
-        builder.setRemark(remark);
-        builder.setOauth(oauth);
-        builder.setColor(color);
-        if (isInsert == false) {
-            builder.setUid(this.uid);
-        }
-
-        Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                AccountDao dao =
-                        AccountDatabase.getInstance(context)
-                                .getAccountDao();
-
-                if (isInsert) {
-                    dao.insert(builder.build());
-                } else {
-                    dao.update(builder.build());
-                }
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        Timber.d("insert completed");
-                        if (callback != null)
-                            callback.onInsertSuccessfully();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(context, R.string.warning_no_parameter, Toast.LENGTH_SHORT).show();
-                        Timber.e(e.toString());
-                    }
-                });
-    }
-
-    public void setByAccountEntity(AccountEntity accountEntity) {
-        setServiceName(accountEntity.getServiceName());
-        setAccount(accountEntity.getAccount());
-        setPassword(accountEntity.getPassword());
-        setUserName(accountEntity.getUserName());
-        setEmail(accountEntity.getEmail());
-        setRemark(accountEntity.getRemark());
-        setColor(accountEntity.getColor());
-        setOauth(accountEntity.getOauth());
-        uid = accountEntity.getUid();
-    }
-
-    @Override
-    public String toString() {
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("service name: ");
-        builder.append(serviceName);
-
-        if (oauth != null) {
-            builder.append(", oauth: ");
-            builder.append(oauth);
-        }
-        if (account != null) {
-            builder.append(", account: ");
-            builder.append(account);
-        }
-        if (email != null) {
-            builder.append(", email: ");
-            builder.append(email);
-        }
-        if (password != null) {
-            builder.append(", password: ");
-            builder.append(password);
-        }
-        if (userName != null) {
-            builder.append(", userName: ");
-            builder.append(userName);
-        }
-        if (remark != null) {
-            builder.append(", remark: ");
-            builder.append(remark);
-        }
-        builder.append(", color: ");
-        builder.append(color);
-        builder.append(", uid: ");
-        builder.append(uid);
-
-        return builder.toString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(account);
-        parcel.writeString(password);
-        parcel.writeString(userName);
-        parcel.writeString(email);
-        parcel.writeString(remark);
-        parcel.writeString(serviceName);
-        parcel.writeString(oauth);
-        parcel.writeInt(color);
-        parcel.writeLong(uid);
     }
 }

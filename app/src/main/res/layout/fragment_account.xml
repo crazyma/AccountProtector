@@ -12,6 +12,10 @@
         <variable
             name="passwordClickListener"
             type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener" />
+
+        <variable
+            name="addMoreButtonListener"
+            type="com.beibeilab.accountprotector.feature.account.AddMoreButtonListener" />
     </data>
 
     <ScrollView
@@ -25,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:accountViewModel="@{accountViewModel}"
-            app:passwordClickListener="@{passwordClickListener}"/>
+            app:addMoreButtonListener="@{addMoreButtonListener}"
+            app:passwordClickListener="@{passwordClickListener}" />
 
     </ScrollView>
 </layout>

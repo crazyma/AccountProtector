@@ -34,7 +34,9 @@ import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivi
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends LifecycleFragment implements AccountViewModel.PasswordButtonClickListener {
+public class AccountFragment extends LifecycleFragment implements
+        AccountViewModel.PasswordButtonClickListener,
+        AddMoreButtonListener {
 
     private AccountViewModel mAccountViewModel;
     private AccountFragmentBinding mBinding;
@@ -47,6 +49,7 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
     public static AccountFragment newInstance(AccountViewModel accountViewModel) {
         AccountFragment fragment = new AccountFragment();
         fragment.mAccountViewModel = accountViewModel;
+        fragment.mAccountViewModel.modifyAddMoreButtonVisibility();
         return fragment;
     }
 
@@ -59,6 +62,7 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
         mAccountViewModel.setEditable(false);
         mBinding.setAccountViewModel(mAccountViewModel);
         mBinding.setPasswordClickListener(this);
+        mBinding.setAddMoreButtonListener(this);
 
         return mBinding.getRoot();
     }
@@ -67,8 +71,6 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) getActivity()).hideFAB();
-
-//        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
         if (item.getItemId() == R.id.action_edit_account) {
             jump2Edit();
             return true;
-        } else if(item.getItemId() == android.R.id.home){
+        } else if (item.getItemId() == android.R.id.home) {
             getActivity().onBackPressed();
         }
 
@@ -112,6 +114,11 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
         copyToClipboard(mAccountViewModel.getPassword());
     }
 
+    @Override
+    public void onAddMoreButtonClick(View view) {
+        jump2Edit();
+    }
+
     private void queryAccountEntity() {
 
         AccountDatabase accountDatabase = AccountDatabase.getInstance(getContext());
@@ -120,6 +127,7 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
             @Override
             public void onChanged(@Nullable AccountEntity accountEntity) {
                 mAccountViewModel.setByAccountEntity(accountEntity);
+                mAccountViewModel.modifyAddMoreButtonVisibility();
                 mAccountViewModel.setEditable(false);
             }
         });

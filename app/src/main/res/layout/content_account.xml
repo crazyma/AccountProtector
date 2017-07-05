@@ -13,6 +13,10 @@
         <variable
             name="passwordClickListener"
             type="com.beibeilab.accountprotector.feature.addaccount.AccountViewModel.PasswordButtonClickListener" />
+
+        <variable
+            name="addMoreButtonListener"
+            type="com.beibeilab.accountprotector.feature.account.AddMoreButtonListener" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -246,6 +250,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_title_password"
             bind:visible_content="@{accountViewModel.password}" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/stroke_green_background"
+            android:onClick="@{addMoreButtonListener::onAddMoreButtonClick}"
+            android:text="@string/btn_add_more"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:visibility="@{accountViewModel.addMoreButtonVisible}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
