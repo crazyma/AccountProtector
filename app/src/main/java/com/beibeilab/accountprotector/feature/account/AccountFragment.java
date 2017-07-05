@@ -67,6 +67,14 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) getActivity()).hideFAB();
+
+//        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -91,6 +99,8 @@ public class AccountFragment extends LifecycleFragment implements AccountViewMod
         if (item.getItemId() == R.id.action_edit_account) {
             jump2Edit();
             return true;
+        } else if(item.getItemId() == android.R.id.home){
+            getActivity().onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
