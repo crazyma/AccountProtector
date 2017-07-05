@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="AddAccountBinding">
 
@@ -23,145 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <include
+            android:id="@+id/layout_content"
+            layout="@layout/content_add_account"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/text_generate_title"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="@string/fragemnt_title_account_name"
-                android:text="@{accountViewModel.serviceName}"
-                android:textColor="@color/edit_text_color"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:addTextChangedListener="@{accountViewModel.addServiceNameTextWatcher}" />
-
-            <ImageView
-                android:id="@+id/btn_color_picker"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/colorPrimary"
-                android:onClick="@{callback::onPickerButtonClicked}"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/icon_color_picker"
-                bind:ovalColor="@{accountViewModel.color}" />
-
-            <View
-                android:id="@+id/view_divider1"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/silver"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_generate_title" />
-
-            <View
-                android:id="@+id/view_divider2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/silver"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_google" />
-
-            <ImageView
-                android:id="@+id/image_github"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="0dp"
-                android:onClick="@{accountViewModel::oauthButtonClicked}"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/image_twitter"
-                app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/icon_github_pale"
-                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
-
-            <ImageView
-                android:id="@+id/image_twitter"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:onClick="@{accountViewModel::oauthButtonClicked}"
-                app:layout_constraintEnd_toStartOf="@+id/image_github"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/image_facebook"
-                app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/icon_twitter_pale"
-                bind:oauth_icon_switch="@{accountViewModel.oauth}"
-                tools:layout_editor_absoluteX="162dp" />
-
-            <ImageView
-                android:id="@+id/image_facebook"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:onClick="@{accountViewModel::oauthButtonClicked}"
-                app:layout_constraintEnd_toStartOf="@+id/image_twitter"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/image_google"
-                app:layout_constraintTop_toTopOf="@+id/image_google"
-                app:srcCompat="@drawable/icon_facebook_pale"
-                bind:oauth_icon_switch="@{accountViewModel.oauth}"
-                tools:layout_editor_absoluteX="118dp" />
-
-            <ImageView
-                android:id="@+id/image_google"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                android:onClick="@{accountViewModel::oauthButtonClicked}"
-                app:layout_constraintEnd_toStartOf="@+id/image_facebook"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider1"
-                app:srcCompat="@drawable/icon_google_pale"
-                bind:oauth_icon_switch="@{accountViewModel.oauth}" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.08" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.92" />
-
-            <include
-                android:id="@+id/layout_include"
-                layout="@layout/layout_attribute"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:accountViewModel="@{accountViewModel}"
-                app:callback="@{callback}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider2"
-                app:passwordClickListener="@{passwordClickListener}" />
-
-        </android.support.constraint.ConstraintLayout>
-
+            android:layout_height="wrap_content"
+            app:accountViewModel="@{accountViewModel}"
+            app:callback="@{callback}"
+            app:passwordClickListener="@{passwordClickListener}" />
 
     </ScrollView>
 </layout>
