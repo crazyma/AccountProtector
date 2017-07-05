@@ -47,11 +47,10 @@
             android:id="@+id/image_password"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_account"
-            app:layout_constraintTop_toBottomOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/image_user_name"
             app:srcCompat="@drawable/icon_indicator_password"
             bind:visible_content="@{accountViewModel.password}" />
 
@@ -59,16 +58,16 @@
             android:id="@+id/text_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="4dp"
             android:text="@{accountViewModel.password}"
             android:textColor="@color/grey"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_password"
             app:layout_constraintStart_toStartOf="@+id/text_title_password"
             app:layout_constraintTop_toBottomOf="@+id/text_title_password"
-            tools:text="**********"
             bind:visible_content="@{accountViewModel.password}"
-            app:layout_constraintEnd_toStartOf="@+id/btn_password"
-            android:layout_marginEnd="8dp" />
+            tools:text="**********" />
 
         <TextView
             android:id="@+id/text_title_account"
@@ -99,11 +98,10 @@
             android:id="@+id/image_user_name"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_password"
-            app:layout_constraintTop_toBottomOf="@+id/image_password"
+            app:layout_constraintTop_toBottomOf="@+id/image_account"
             app:srcCompat="@drawable/icon_indicator_username"
             bind:visible_content="@{accountViewModel.userName}" />
 
@@ -118,8 +116,8 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/text_title_user_name"
             app:layout_constraintTop_toBottomOf="@+id/text_title_user_name"
-            tools:text="Peter Parker"
-            bind:visible_content="@{accountViewModel.userName}" />
+            bind:visible_content="@{accountViewModel.userName}"
+            tools:text="Peter Parker" />
 
         <TextView
             android:id="@+id/text_title_user_name"
@@ -140,7 +138,7 @@
             android:layout_marginTop="16dp"
             android:scaleType="center"
             app:layout_constraintStart_toStartOf="@+id/image_user_name"
-            app:layout_constraintTop_toBottomOf="@+id/image_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/image_password"
             app:srcCompat="@drawable/icon_indicator_email"
             bind:visible_content="@{accountViewModel.email}" />
 
@@ -155,8 +153,8 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/text_title_email"
             app:layout_constraintTop_toBottomOf="@+id/text_title_email"
-            tools:text="spiderman@gmail.com"
-            bind:visible_content="@{accountViewModel.email}" />
+            bind:visible_content="@{accountViewModel.email}"
+            tools:text="spiderman@gmail.com" />
 
         <TextView
             android:id="@+id/text_title_email"
@@ -230,8 +228,8 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/text_title_account"
             app:layout_constraintTop_toBottomOf="@+id/text_title_account"
-            tools:text="my account"
-            bind:visible_content="@{accountViewModel.account}" />
+            bind:visible_content="@{accountViewModel.account}"
+            tools:text="my account" />
 
         <Button
             android:id="@+id/btn_password"
