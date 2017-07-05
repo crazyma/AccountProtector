@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.addaccount.AddAccountActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.EditText">
         </activity>
     </application>
 
