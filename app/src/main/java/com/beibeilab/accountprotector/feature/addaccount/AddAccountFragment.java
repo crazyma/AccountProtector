@@ -22,6 +22,7 @@ import com.beibeilab.accountprotector.feature.password.PasswordGenerateFragment;
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
+import com.beibeilab.accountprotector.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,7 +83,8 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public void onPasswordGenerate(String password) {
-        accountViewModel.setPassword(password);
+        if(Util.validString(password))
+            accountViewModel.setPassword(password);
     }
 
     @Override

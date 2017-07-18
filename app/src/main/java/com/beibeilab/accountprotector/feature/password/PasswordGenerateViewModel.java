@@ -56,7 +56,7 @@ public class PasswordGenerateViewModel {
         }
     }
 
-    public void commitButtonClickListener(View view) {
+    public void commitButtonClicked(View view) {
         if(!isNextStep.get()){
             isNextStep.set(true);
             changeLayout(view);
@@ -66,6 +66,10 @@ public class PasswordGenerateViewModel {
                 listener.viewModelCallback(password.get());
             }
         }
+    }
+
+    public void cancelButtonClicked(View view) {
+        listener.viewModelCallback(null);
     }
 
     public void reGenerateClicked(View view){
