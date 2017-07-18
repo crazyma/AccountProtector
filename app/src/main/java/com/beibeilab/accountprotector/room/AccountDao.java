@@ -20,6 +20,10 @@ import io.reactivex.Flowable;
 @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
 public interface AccountDao {
 
+    @Query("SELECT account FROM accountEntity "
+            + "WHERE account LIKE :account")
+    List<String> getAccountEntityByAccount(String account);
+
     @Query("SELECT * FROM accountEntity")
     List<AccountEntity> getAll();
 
