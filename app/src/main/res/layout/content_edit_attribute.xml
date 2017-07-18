@@ -99,7 +99,7 @@
             bind:visible_content="@{accountViewModel.account}"
             bind:visible_editable="@{accountViewModel.editable}">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/edit_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
