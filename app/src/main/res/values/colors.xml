@@ -11,45 +11,89 @@
     <color name="grey">#4a4a4a</color>
 
 
-    <color name="red">#F6402C</color>
-    <color name="pink">#EB1460</color>
-    <color name="purple">#9C1AB1</color>
-    <color name="deep_purple">#6633B9</color>
-    <color name="indigo">#3D4DB7</color>
-    <color name="blue">#1093F5</color>
-    <color name="light_blue">#00A6F6</color>
-    <color name="cyan">#00BBD5</color>
-    <color name="teal">#009687</color>
-    <color name="green">#46AF4A</color>
-    <!--<color name="light_green">#88C440</color>-->
-    <color name="lime">#CCDD1E</color>
-    <color name="yellow">#FFEC16</color>
-    <color name="amber">#FFC100</color>
-    <color name="orange">#FF9800</color>
-    <color name="deep_orange">#FF5505</color>
-    <color name="brown">#7A5547</color>
-    <color name="light_grey">#9D9D9D</color>
-    <color name="blue_grey">#5E7C8B</color>
+    <!--<color name="red">#F6402C</color>-->
+    <!--<color name="pink">#EB1460</color>-->
+    <!--<color name="purple">#9C1AB1</color>-->
+    <!--<color name="deep_purple">#6633B9</color>-->
+    <!--<color name="indigo">#3D4DB7</color>-->
+    <!--<color name="blue">#1093F5</color>-->
+    <!--<color name="light_blue">#00A6F6</color>-->
+    <!--<color name="cyan">#00BBD5</color>-->
+    <!--<color name="teal">#009687</color>-->
+    <!--<color name="green">#46AF4A</color>-->
+    <!--&lt;!&ndash;<color name="light_green">#88C440</color>&ndash;&gt;-->
+    <!--<color name="lime">#CCDD1E</color>-->
+    <!--<color name="yellow">#FFEC16</color>-->
+    <!--<color name="amber">#FFC100</color>-->
+    <!--<color name="orange">#FF9800</color>-->
+    <!--<color name="deep_orange">#FF5505</color>-->
+    <!--<color name="brown">#7A5547</color>-->
+    <!--<color name="light_grey">#9D9D9D</color>-->
+    <!--<color name="blue_grey">#5E7C8B</color>-->
+
+    <color name="color1">#ed412d</color>
+    <color name="color2">#f2628e</color>
+    <color name="color3">#e6007f</color>
+    <color name="color4">#510098</color>
+    <color name="color5">#1bcef7</color>
+    <color name="color6">#00abee</color>
+    <color name="color7">#337bf7</color>
+    <color name="color8">#39579a</color>
+    <color name="color9">#28795c</color>
+    <color name="color10">#2da94f</color>
+    <color name="color11">#8ec500</color>
+    <color name="color12">#ccdd1e</color>
+    <color name="color13">#ff6c00</color>
+    <color name="color14">#ff9800</color>
+    <color name="color15">#fec003</color>
+    <color name="color16">#ffdf20</color>
+    <color name="color17">#7d481f</color>
+    <color name="color18">#c9c9c9</color>
+    <color name="color19">#77919e</color>
+    <color name="color20">#3a3a3a</color>
 
     <integer-array name="androidcolors">
-        <item>@color/red</item>
-        <item>@color/pink</item>
-        <item>@color/purple</item>
-        <item>@color/deep_purple</item>
-        <item>@color/indigo</item>
-        <item>@color/blue</item>
-        <item>@color/light_blue</item>
-        <item>@color/cyan</item>
-        <item>@color/teal</item>
-        <item>@color/green</item>
-        <item>@color/colorPrimary</item>
-        <item>@color/lime</item>
-        <item>@color/yellow</item>
-        <item>@color/amber</item>
-        <item>@color/orange</item>
-        <item>@color/deep_orange</item>
-        <item>@color/brown</item>
-        <item>@color/light_grey</item>
-        <item>@color/blue_grey</item>
+        <item>@color/color1</item>
+        <item>@color/color2</item>
+        <item>@color/color3</item>
+        <item>@color/color4</item>
+        <item>@color/color5</item>
+        <item>@color/color6</item>
+        <item>@color/color7</item>
+        <item>@color/color8</item>
+        <item>@color/color9</item>
+        <item>@color/color10</item>
+        <item>@color/color11</item>
+        <item>@color/color12</item>
+        <item>@color/color13</item>
+        <item>@color/color14</item>
+        <item>@color/color15</item>
+        <item>@color/color16</item>
+        <item>@color/color17</item>
+        <item>@color/color18</item>
+        <item>@color/color19</item>
+        <item>@color/color20</item>
     </integer-array>
+
+    <!--<integer-array name="androidcolors">-->
+        <!--<item>@color/red</item>-->
+        <!--<item>@color/pink</item>-->
+        <!--<item>@color/purple</item>-->
+        <!--<item>@color/deep_purple</item>-->
+        <!--<item>@color/indigo</item>-->
+        <!--<item>@color/blue</item>-->
+        <!--<item>@color/light_blue</item>-->
+        <!--<item>@color/cyan</item>-->
+        <!--<item>@color/teal</item>-->
+        <!--<item>@color/green</item>-->
+        <!--<item>@color/colorPrimary</item>-->
+        <!--<item>@color/lime</item>-->
+        <!--<item>@color/yellow</item>-->
+        <!--<item>@color/amber</item>-->
+        <!--<item>@color/orange</item>-->
+        <!--<item>@color/deep_orange</item>-->
+        <!--<item>@color/brown</item>-->
+        <!--<item>@color/light_grey</item>-->
+        <!--<item>@color/blue_grey</item>-->
+    <!--</integer-array>-->
 </resources>
