@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckedTextView;
+import android.widget.Toast;
 
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.util.PasswordGenerator;
@@ -59,9 +60,13 @@ public class PasswordGenerateViewModel {
 
     public void commitButtonClicked(View view) {
         if(!isNextStep.get()){
-            isNextStep.set(true);
-            changeLayout(view);
-            generatePassword();
+            if(checkRuleExist()) {
+                isNextStep.set(true);
+                changeLayout(view);
+                generatePassword();
+            } else{
+                Toast.makeText(view.getContext(), "請選擇規則", Toast.LENGTH_SHORT).show();
+            }
         }else{
             if (listener != null) {
                 listener.viewModelCallback(password.get());
@@ -108,5 +113,9 @@ public class PasswordGenerateViewModel {
                     Util.validString(length) ? Integer.valueOf(length) : 8,
                     ruleArray);
         password.set(generator.generate());
+    }
+
+    private boolean checkRuleExist(){
+        return ruleArray[0] || ruleArray[1] || ruleArray[2] || ruleArray[3];
     }
 }
