@@ -11,6 +11,7 @@ import android.widget.CheckedTextView;
 
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.util.PasswordGenerator;
+import com.beibeilab.accountprotector.util.Util;
 
 /**
  * Created by david on 2017/6/13.
@@ -103,7 +104,9 @@ public class PasswordGenerateViewModel {
 
     private void generatePassword(){
         if(generator == null)
-            generator = new PasswordGenerator(Integer.valueOf(length), ruleArray);
+            generator = new PasswordGenerator(
+                    Util.validString(length) ? Integer.valueOf(length) : 8,
+                    ruleArray);
         password.set(generator.generate());
     }
 }

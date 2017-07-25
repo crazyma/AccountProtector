@@ -16,7 +16,14 @@ public class PasswordGenerator {
     private int mLength;
 
     public PasswordGenerator(int length, boolean[] ruleArray) {
-        mLength = length;
+        if(length < 4) {
+            mLength = 4;
+        }else if(length > 12){
+            mLength = 12;
+        }else {
+            mLength = length;
+        }
+
         createSample(ruleArray);
     }
 
