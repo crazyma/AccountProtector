@@ -91,10 +91,14 @@ public class MainFragment extends LifecycleFragment {
                 List<String> stringList =
                         AccountDatabase.getInstance(getContext())
                                 .getAccountDao()
-                                .getAccountEntityByAccount("%ma%");
+                                .getDistinctAccountEntity();
                 Timber.d("-----------------");
                 for (String s : stringList) {
-                    Timber.d("???? %s", s);
+                    if (s == null) {
+                        Timber.d("null is null");
+                    } else {
+                        Timber.d("???? %s", s);
+                    }
                 }
                 Timber.d("-----------------");
 

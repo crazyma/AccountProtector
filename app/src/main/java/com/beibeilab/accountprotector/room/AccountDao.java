@@ -24,6 +24,10 @@ public interface AccountDao {
             + "WHERE account LIKE :account")
     List<String> getAccountEntityByAccount(String account);
 
+    @Query("SELECT DISTINCT account FROM accountEntity "
+            + "WHERE account IS NOT NULL")
+    List<String> getDistinctAccountEntity();
+
     @Query("SELECT * FROM accountEntity")
     List<AccountEntity> getAll();
 
