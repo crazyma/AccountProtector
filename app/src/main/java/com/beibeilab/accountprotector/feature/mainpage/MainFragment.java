@@ -1,5 +1,6 @@
 package com.beibeilab.accountprotector.feature.mainpage;
 
+import android.accounts.Account;
 import android.app.AlertDialog;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.LiveData;
@@ -32,6 +33,7 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -78,6 +80,26 @@ public class MainFragment extends LifecycleFragment {
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        testQuery();
+    }
+
+    private void testQuery() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<String> stringList =
+                        AccountDatabase.getInstance(getContext())
+                                .getAccountDao()
+                                .getAccountEntityByAccount("%ma%");
+                Timber.d("-----------------");
+                for (String s : stringList) {
+                    Timber.d("???? %s", s);
+                }
+                Timber.d("-----------------");
+
+            }
+        }).start();
     }
 
     private void setupRecyclerView() {
