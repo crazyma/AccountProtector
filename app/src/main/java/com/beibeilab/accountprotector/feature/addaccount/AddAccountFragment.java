@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import com.android.colorpicker.ColorPickerDialog;
 import com.android.colorpicker.ColorPickerSwatch;
@@ -32,6 +34,9 @@ public class AddAccountFragment extends Fragment implements
         AccountViewModel.PasswordButtonClickListener,
         ColorPickerSwatch.OnColorSelectedListener {
 
+    private static final String[] COUNTRIES = new String[]{
+            "Belgium", "France", "Italy", "Germany", "Spain", "david77115@gmail.com"
+    };
     private AddAccountBinding mBinding;
     protected AccountViewModel accountViewModel;
 
@@ -64,6 +69,7 @@ public class AddAccountFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
 
         accountDatabase = AccountDatabase.getInstance(getContext());
+        setupAutocompleteTextView();
 
     }
 
@@ -83,7 +89,7 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public void onPasswordGenerate(String password) {
-        if(Util.validString(password))
+        if (Util.validString(password))
             accountViewModel.setPassword(password);
     }
 
@@ -133,5 +139,12 @@ public class AddAccountFragment extends Fragment implements
         AccountViewModel accountViewModel = new AccountViewModel();
         accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         return accountViewModel;
+    }
+
+    private void setupAutocompleteTextView() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        AutoCompleteTextView textView = mBinding.layoutContent.layoutInclude.editAccount;
+        textView.setAdapter(adapter);
     }
 }
