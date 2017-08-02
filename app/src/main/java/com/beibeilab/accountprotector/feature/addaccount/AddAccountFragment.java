@@ -26,6 +26,14 @@ import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+import timber.log.Timber;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -34,12 +42,10 @@ public class AddAccountFragment extends Fragment implements
         AccountViewModel.PasswordButtonClickListener,
         ColorPickerSwatch.OnColorSelectedListener {
 
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain", "david77115@gmail.com"
-    };
     private AddAccountBinding mBinding;
     protected AccountViewModel accountViewModel;
 
+    private List<String> autoCompleteList;
     private AccountDatabase accountDatabase;
 
     public AddAccountFragment() {
@@ -70,7 +76,7 @@ public class AddAccountFragment extends Fragment implements
 
         accountDatabase = AccountDatabase.getInstance(getContext());
         setupAutocompleteTextView();
-
+        parseAccountList();
     }
 
     @Override
@@ -142,9 +148,58 @@ public class AddAccountFragment extends Fragment implements
     }
 
     private void setupAutocompleteTextView() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+
+        accountDatabase.getAccountDao().getDistinctAccountEntityFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<List<String>>() {
+                    @Override
+                    public void onNext(List<String> strings) {
+                        for (String string : strings) {
+                            Timber.d("XD %s", string);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+        autoCompleteList = new ArrayList<>();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         AutoCompleteTextView textView = mBinding.layoutContent.layoutInclude.editAccount;
         textView.setAdapter(adapter);
+    }
+
+    private void parseAccountList() {
+        accountDatabase.getAccountDao().getDistinctAccountEntityFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<List<String>>() {
+                    @Override
+                    public void onNext(List<String> strings) {
+                        autoCompleteList.clear();
+                        autoCompleteList.addAll(strings);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
