@@ -23,6 +23,9 @@ import com.beibeilab.accountprotector.feature.account.AccountFragment;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.room.AccountEntity;
+import com.github.ajalt.reprint.core.AuthenticationResult;
+import com.github.ajalt.reprint.core.Reprint;
+import com.github.ajalt.reprint.rxjava2.RxReprint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 
 /**
@@ -44,6 +48,7 @@ public class MainFragment extends LifecycleFragment {
     private AccountDatabase accountDatabase;
     private LiveData<List<AccountEntity>> liveData;
 
+    private AlertDialog mFingerprintDialog;
     private RecyclerView mRecyclerView;
 
     public MainFragment() {
@@ -172,7 +177,36 @@ public class MainFragment extends LifecycleFragment {
     private View.OnClickListener itemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            jump2AccountFragment((int) view.getTag());
+            final int index = (int) view.getTag();
+            showFingerprintDialog();
+            RxReprint.authenticate()
+                    .subscribeWith(new DisposableSubscriber<AuthenticationResult>() {
+                        @Override
+                        public void onNext(AuthenticationResult authenticationResult) {
+                            switch (authenticationResult.status) {
+                                case SUCCESS:
+                                    Timber.d("!!!!!!!  SUCCESS");
+                                    jump2AccountFragment(index);
+                                    break;
+                                case NONFATAL_FAILURE:
+                                    Timber.d("!!!!!!!  NONFATAL_FAILURE");
+                                    break;
+                                case FATAL_FAILURE:
+                                    Timber.d("!!!!!!!  FATAL_FAILURE");
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            mFingerprintDialog.dismiss();
+                        }
+                    });
         }
     };
 
@@ -196,6 +230,20 @@ public class MainFragment extends LifecycleFragment {
         fragmentTransaction.replace(R.id.fragment_content, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private void showFingerprintDialog() {
+        mFingerprintDialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.dialog_title)
+                .setMessage("請使用指紋辨識")
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Reprint.cancelAuthentication();
+                    }
+                })
+                .create();
+        mFingerprintDialog.show();
     }
 
     private void createDeleteDialog(final int index) {

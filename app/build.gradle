@@ -45,10 +45,10 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha3"
     compile "android.arch.lifecycle:runtime:1.0.0-alpha3"
     compile "android.arch.lifecycle:extensions:1.0.0-alpha3"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha3"
-    compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.github.ajalt.reprint:core:3.1.0@aar' // required: supports marshmallow devices
     compile 'com.github.ajalt.reprint:rxjava2:3.1.0@aar' // optional: the RxJava 2 interface
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha3"
+    compile 'com.facebook.stetho:stetho:1.5.0'
     testCompile 'junit:junit:4.12'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }
