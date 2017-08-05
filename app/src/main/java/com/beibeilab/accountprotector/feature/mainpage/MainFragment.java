@@ -1,6 +1,5 @@
 package com.beibeilab.accountprotector.feature.mainpage;
 
-import android.accounts.Account;
 import android.app.AlertDialog;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.LiveData;
@@ -173,18 +172,7 @@ public class MainFragment extends LifecycleFragment {
     private View.OnClickListener itemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            int index = (int) view.getTag();
-
-            List<AccountEntity> accountEntityList = liveData.getValue();
-
-            AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
-
-            AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_content, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            jump2AccountFragment((int) view.getTag());
         }
     };
 
@@ -192,28 +180,43 @@ public class MainFragment extends LifecycleFragment {
 
         @Override
         public boolean onLongClick(View view) {
-            final int index = (int) view.getTag();
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.dialog_title)
-                    .setMessage(R.string.dialog_delete_message)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            List<AccountEntity> accountEntityList = liveData.getValue();
-                            deleteAccount(accountEntityList.get(index));
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    })
-                    .show();
-
+            createDeleteDialog((int) view.getTag());
             return true;
         }
     };
+
+    private void jump2AccountFragment(int index) {
+        List<AccountEntity> accountEntityList = liveData.getValue();
+
+        AccountViewModel accountViewModel = new AccountViewModel(accountEntityList.get(index));
+
+        AccountFragment fragment = AccountFragment.newInstance(accountViewModel);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void createDeleteDialog(final int index) {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.dialog_title)
+                .setMessage(R.string.dialog_delete_message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        List<AccountEntity> accountEntityList = liveData.getValue();
+                        deleteAccount(accountEntityList.get(index));
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
 
     private void deleteAccount(final AccountEntity accountEntity) {
 
