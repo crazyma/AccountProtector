@@ -20,9 +20,13 @@ import io.reactivex.Flowable;
 @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
 public interface AccountDao {
 
-    @Query("SELECT account FROM accountEntity "
-            + "WHERE account LIKE :account")
-    List<String> getAccountEntityByAccount(String account);
+    @Query("SELECT DISTINCT account FROM accountEntity "
+            + "WHERE account IS NOT NULL")
+    List<String> getDistinctAccountEntity();
+
+    @Query("SELECT DISTINCT account FROM accountEntity "
+            + "WHERE account IS NOT NULL")
+    Flowable<List<String>> getDistinctAccountEntityFlowable();
 
     @Query("SELECT * FROM accountEntity")
     List<AccountEntity> getAll();
@@ -34,10 +38,10 @@ public interface AccountDao {
     LiveData<List<AccountEntity>> getAllFromLiveData();
 
     @Query("SELECT * FROM accountEntity WHERE uid == :uid")
-    Flowable<AccountEntity> getAccoutEntityByUidRx(long uid);
+    Flowable<AccountEntity> getAccountEntityByUidRx(long uid);
 
     @Query("SELECT * FROM accountEntity WHERE uid == :uid")
-    LiveData<AccountEntity> getAccoutEntityByUid(long uid);
+    LiveData<AccountEntity> getAccountEntityByUid(long uid);
 
     @Insert
     void insert(AccountEntity accountEntity);

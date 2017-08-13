@@ -1,8 +1,10 @@
 package com.beibeilab.accountprotector;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.stetho.Stetho;
+import com.github.ajalt.reprint.core.Reprint;
 
 import timber.log.Timber;
 
@@ -20,5 +22,16 @@ public class CustomApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
         Stetho.initializeWithDefaults(this);
+        Reprint.initialize(this, new Reprint.Logger() {
+            @Override
+            public void log(String message) {
+                Log.d("Reprint", message);
+            }
+
+            @Override
+            public void logException(Throwable throwable, String message) {
+                Log.e("Reprint", message, throwable);
+            }
+        });
     }
 }

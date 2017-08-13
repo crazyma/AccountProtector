@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import com.android.colorpicker.ColorPickerDialog;
 import com.android.colorpicker.ColorPickerSwatch;
@@ -23,6 +25,14 @@ import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.AddAccountBinding;
 import com.beibeilab.accountprotector.room.AccountDatabase;
 import com.beibeilab.accountprotector.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +45,7 @@ public class AddAccountFragment extends Fragment implements
     private AddAccountBinding mBinding;
     protected AccountViewModel accountViewModel;
 
+    private List<String> autoCompleteList;
     private AccountDatabase accountDatabase;
 
     public AddAccountFragment() {
@@ -64,7 +75,8 @@ public class AddAccountFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
 
         accountDatabase = AccountDatabase.getInstance(getContext());
-
+        setupAutocompleteTextView();
+        parseAccountList();
     }
 
     @Override
@@ -83,7 +95,7 @@ public class AddAccountFragment extends Fragment implements
 
     @Override
     public void onPasswordGenerate(String password) {
-        if(Util.validString(password))
+        if (Util.validString(password))
             accountViewModel.setPassword(password);
     }
 
@@ -133,5 +145,61 @@ public class AddAccountFragment extends Fragment implements
         AccountViewModel accountViewModel = new AccountViewModel();
         accountViewModel.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         return accountViewModel;
+    }
+
+    private void setupAutocompleteTextView() {
+
+        accountDatabase.getAccountDao().getDistinctAccountEntityFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<List<String>>() {
+                    @Override
+                    public void onNext(List<String> strings) {
+                        for (String string : strings) {
+                            Timber.d("XD %s", string);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+        autoCompleteList = new ArrayList<>();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, autoCompleteList);
+        AutoCompleteTextView textView = mBinding.layoutContent.layoutInclude.editAccount;
+        textView.setAdapter(adapter);
+    }
+
+    private void parseAccountList() {
+        accountDatabase.getAccountDao().getDistinctAccountEntityFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSubscriber<List<String>>() {
+                    @Override
+                    public void onNext(List<String> strings) {
+                        autoCompleteList.clear();
+                        autoCompleteList.addAll(strings);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

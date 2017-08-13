@@ -122,7 +122,7 @@ public class AccountFragment extends LifecycleFragment implements
     private void queryAccountEntity() {
 
         AccountDatabase accountDatabase = AccountDatabase.getInstance(getContext());
-        liveData = accountDatabase.getAccountDao().getAccoutEntityByUid(mAccountViewModel.getUid());
+        liveData = accountDatabase.getAccountDao().getAccountEntityByUid(mAccountViewModel.getUid());
         liveData.observe(this, new Observer<AccountEntity>() {
             @Override
             public void onChanged(@Nullable AccountEntity accountEntity) {
