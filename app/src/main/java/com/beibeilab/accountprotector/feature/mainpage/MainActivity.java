@@ -3,6 +3,7 @@ package com.beibeilab.accountprotector.feature.mainpage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +38,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupFragment(){
-        MainFragment fragment = new MainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_content, fragment);
+
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_content);
+        if(fragment == null) {
+            fragment = new MainFragment();
+            fragmentTransaction.add(R.id.fragment_content, fragment);
+        }
         fragmentTransaction.commit();
     }
 
