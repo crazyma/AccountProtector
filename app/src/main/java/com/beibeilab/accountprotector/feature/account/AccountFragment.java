@@ -23,8 +23,8 @@ import com.beibeilab.accountprotector.databinding.AccountFragmentBinding;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
 import com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity;
 import com.beibeilab.accountprotector.feature.mainpage.MainActivity;
-import com.beibeilab.accountprotector.room.AccountDatabase;
-import com.beibeilab.accountprotector.room.AccountEntity;
+import com.beibeilab.accountprotector.room2.AccountDatabase;
+import com.beibeilab.accountprotector.room2.AccountEntity;
 
 import static android.app.Activity.RESULT_OK;
 import static com.beibeilab.accountprotector.feature.addaccount.AddAccountActivity.PARAM_ACCOUNT_VIEW_MODEL;
