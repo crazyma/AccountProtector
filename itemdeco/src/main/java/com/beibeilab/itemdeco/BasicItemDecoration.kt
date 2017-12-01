@@ -23,7 +23,7 @@ class BasicItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
         val ta: TypedArray = context.obtainStyledAttributes(ATRRS)
         mDivider = ta.getDrawable(0)
         ta.recycle()
-        textPaddingLeft = context.resources.getDimensionPixelSize(R.dimen.main_list_text_padding_left);
+        textPaddingLeft = context.resources.getDimensionPixelSize(R.dimen.main_list_text_padding_left)
     }
 
 
