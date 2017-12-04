@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.beibeilab.accountprotector.feature.mainpage.RecyclerViewAdapter;
-import com.beibeilab.itemdeco.BasicItemDecoration;
+import com.beibeilab.itemdeco.CustomDecoration;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class RecyclerViewBindingHelper {
 
 
         recyclerView.addItemDecoration(
-                new BasicItemDecoration(recyclerView.getContext()));
+                new CustomDecoration(recyclerView.getContext()));
     }
 
 

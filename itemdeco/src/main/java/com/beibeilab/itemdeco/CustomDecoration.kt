@@ -11,11 +11,13 @@ import android.view.View
 
 /**
  * Created by david on 2017/11/29.
+ *
+ * Reference: https://gist.github.com/alexfu/0f464fc3742f134ccd1e
  */
 
-class BasicItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
+class CustomDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
-    private var mDivider: Drawable
+    private var mDivider: Drawable  //  the original android divider drawable
     private var textPaddingLeft: Int = 0
     private val ATRRS: IntArray = intArrayOf(listDivider)
 
