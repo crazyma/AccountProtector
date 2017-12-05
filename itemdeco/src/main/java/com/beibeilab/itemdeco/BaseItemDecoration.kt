@@ -5,7 +5,6 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 
 /**
@@ -29,7 +28,6 @@ abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
     protected var divider: Drawable? = null
         set(value) {
             if (value != null) {
-                Log.d("crazyma","!!!!!!!!!!!!!!!")
                 interval = when (orientation) {
                     HORIZONTAL_LIST -> value.intrinsicWidth
                     else -> value.intrinsicHeight
@@ -51,7 +49,6 @@ abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
         paddingOnTop = false
         paddingOnBottom = false
         orientation = VERTICAL_LIST
-        Log.d("crazyma", "init in Base")
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {

@@ -2,7 +2,6 @@ package com.beibeilab.itemdeco
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.util.Log
 import com.beibeilab.itemdeco.TransferDecoration.Companion.ATRRS
 
 /**
@@ -18,7 +17,5 @@ class AccountMainListDecoration(context: Context) : BaseItemDecoration() {
         drawablePaddingLeft = context.resources.getDimensionPixelSize(R.dimen.main_list_text_padding_left)
 
         paddingOnBottom = true
-        Log.d("crazyma", "init in Child")
-        Log.d("crazyma", "interval is $interval")
     }
 }
