@@ -12,18 +12,11 @@ import android.view.View
  */
 
 abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
-    protected var paddingLeft: Int
-    protected var paddingTop: Int
-    protected var paddingRight: Int
-    protected var paddingBottom: Int
-    protected var drawablePaddingLeft: Int
-    protected var drawablePaddingTop: Int
-    protected var drawablePaddingRight: Int
-    protected var drawablePaddingBottom: Int
     protected var interval: Int
     protected var orientation: Int
     protected var paddingOnTop: Boolean
     protected var paddingOnBottom: Boolean
+
 
     protected var divider: Drawable? = null
         set(value) {
@@ -37,15 +30,7 @@ abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
         }
 
     init {
-        paddingLeft = 0
-        paddingTop = 0
-        paddingRight = 0
-        paddingBottom = 0
         interval = 0
-        drawablePaddingLeft = 0
-        drawablePaddingTop = 0
-        drawablePaddingRight = 0
-        drawablePaddingBottom = 0
         paddingOnTop = false
         paddingOnBottom = false
         orientation = VERTICAL_LIST
@@ -58,8 +43,9 @@ abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
 
                 }
                 else -> {
-                    val left = parent.paddingLeft + drawablePaddingLeft
-                    val right = parent.width - parent.paddingRight - drawablePaddingRight
+                    val drawableOffsetRect = getDrawableOffsetsRect()
+                    val left = parent.paddingLeft + drawableOffsetRect.left
+                    val right = parent.width - parent.paddingRight - drawableOffsetRect.right
 
                     val childCount = parent.childCount
                     for (i in 0 until childCount) {
@@ -84,17 +70,11 @@ abstract class BaseItemDecoration : RecyclerView.ItemDecoration() {
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        super.getItemOffsets(outRect, view, parent, state)
-        when (orientation) {
-            HORIZONTAL_LIST -> {
-                outRect.set(paddingLeft, paddingTop, interval, paddingBottom)
-            }
-            else -> {
-                outRect.set(paddingLeft, paddingTop, paddingRight, interval)
-            }
-        }
-
+        outRect.set(getItemOffsetsRect())
     }
+
+    abstract fun getItemOffsetsRect(): Rect
+    abstract fun getDrawableOffsetsRect(): Rect
 
     companion object {
         val VERTICAL_LIST = LinearLayoutManager.VERTICAL
