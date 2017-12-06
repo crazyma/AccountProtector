@@ -13,9 +13,8 @@ class AccountMainListDecoration(val context: Context) : BaseItemDecoration() {
     init {
         val ta: TypedArray = context.obtainStyledAttributes(ATRRS)
         divider = ta.getDrawable(0)
+        footer = ta.getDrawable(0)
         ta.recycle()
-
-        paddingOnBottom = true
     }
 
     override fun getItemOffsetsRect(): Rect {
