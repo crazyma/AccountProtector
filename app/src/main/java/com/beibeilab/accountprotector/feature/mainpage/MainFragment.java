@@ -6,12 +6,17 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -27,6 +32,10 @@ import com.github.ajalt.reprint.core.AuthenticationResult;
 import com.github.ajalt.reprint.core.Reprint;
 import com.github.ajalt.reprint.rxjava2.RxReprint;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -52,6 +61,12 @@ public class MainFragment extends LifecycleFragment {
     private RecyclerView mRecyclerView;
 
     public MainFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -81,11 +96,26 @@ public class MainFragment extends LifecycleFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         testQuery();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_backup) {
+            saveFile("What the fuck\nXD");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void testQuery() {
@@ -287,6 +317,53 @@ public class MainFragment extends LifecycleFragment {
                         Toast.makeText(getContext(), "Delete Fail", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    public File getStorageDir(String folderName) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS), folderName);
+        if (!file.mkdirs()) {
+            Timber.e("FAIL TO CREATE DIR");
+        }
+        return file;
+    }
+
+    private void saveFile(String message) {
+        if (isExternalStorageWritable() && isExternalStorageReadable()) {
+
+            File file = new File(getStorageDir("tt_folder"),"test.txt");
+            try {
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(message.getBytes());
+                outputStream.close();
+                Timber.d("save File done");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Timber.e("ERROR");
+        }
     }
 
 
