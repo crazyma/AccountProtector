@@ -31,7 +31,7 @@ public interface AccountDao {
     @Query("SELECT * FROM accountEntity")
     List<AccountEntity> getAll();
 
-    @Query("SELECT * FROM accountEntity")
+    @Query("SELECT * FROM accountEntity ORDER BY service_name ASC")
     Flowable<List<AccountEntity>> getAllFlowable();
 
     @Query("SELECT * FROM accountEntity ORDER BY service_name ASC")

@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +30,8 @@ import com.beibeilab.accountprotector.room2.AccountEntity;
 import com.github.ajalt.reprint.core.AuthenticationResult;
 import com.github.ajalt.reprint.core.Reprint;
 import com.github.ajalt.reprint.rxjava2.RxReprint;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -112,7 +114,32 @@ public class MainFragment extends LifecycleFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_backup) {
-            saveFile("What the fuck\nXD");
+
+            AccountDatabase.getInstance(getContext())
+                    .getAccountDao()
+                    .getAllFlowable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSubscriber<List<AccountEntity>>() {
+                        @Override
+                        public void onNext(List<AccountEntity> accountEntities) {
+                            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                                    .create();
+
+                            saveFile(gson.toJson(accountEntities));
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -350,19 +377,23 @@ public class MainFragment extends LifecycleFragment {
     private void saveFile(String message) {
         if (isExternalStorageWritable() && isExternalStorageReadable()) {
 
-            File file = new File(getStorageDir("tt_folder"),"test.txt");
+            File file = new File(getStorageDir("apfolder"),"backup.json");
             try {
                 FileOutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(message.getBytes());
                 outputStream.close();
-                Timber.d("save File done");
+
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
             }
         } else {
             Timber.e("ERROR");
+            Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
         }
     }
 
