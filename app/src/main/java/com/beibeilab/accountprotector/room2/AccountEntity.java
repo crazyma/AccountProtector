@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import com.google.gson.annotations.Expose;
 
 import com.beibeilab.accountprotector.util.Util;
 
@@ -18,24 +19,31 @@ public class AccountEntity {
     private long uid;
 
     @ColumnInfo(name = "service_name")
+    @Expose()
     private String serviceName;
 
     @ColumnInfo(name = "oauth")
+    @Expose()
     private String oauth;
 
     @ColumnInfo(name = "account")
+    @Expose()
     private String account;
 
     @ColumnInfo(name = "password")
+    @Expose()
     private String password;
 
     @ColumnInfo(name = "encrypted_pwd")
+    @Expose()
     private String encryptedPwd;
 
     @ColumnInfo(name = "user_name")
+    @Expose()
     private String userName;
 
     @ColumnInfo(name = "email")
+    @Expose()
     private String email;
 
     @ColumnInfo(name = "remark")
