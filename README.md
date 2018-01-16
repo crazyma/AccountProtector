@@ -10,7 +10,7 @@
 
 # 開發畫面
 
-![screenshot 1](./images/Screenshot_1.png)
-![screenshot 2](./images/Screenshot_2.png)
-![screenshot 3](./images/Screenshot_3.png)
-![screenshot 4](./images/Screenshot_4.png)
+![screenshot 1](./screenshot/Screenshot_1.png)
+![screenshot 2](./screenshot/Screenshot_2.png)
+![screenshot 3](./screenshot/Screenshot_3.png)
+![screenshot 4](./screenshot/Screenshot_4.png)
