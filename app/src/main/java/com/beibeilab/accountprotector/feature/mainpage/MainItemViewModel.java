@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.feature.account.AccountUnit;
-import com.beibeilab.accountprotector.room.AccountEntity;
+import com.beibeilab.accountprotector.room2.AccountEntity;
 import com.beibeilab.accountprotector.util.Util;
 
 import timber.log.Timber;

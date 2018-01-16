@@ -6,12 +6,16 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,17 +25,24 @@ import com.beibeilab.accountprotector.R;
 import com.beibeilab.accountprotector.databinding.MainFragmentBinding;
 import com.beibeilab.accountprotector.feature.account.AccountFragment;
 import com.beibeilab.accountprotector.feature.addaccount.AccountViewModel;
-import com.beibeilab.accountprotector.room.AccountDatabase;
-import com.beibeilab.accountprotector.room.AccountEntity;
+import com.beibeilab.accountprotector.room2.AccountDatabase;
+import com.beibeilab.accountprotector.room2.AccountEntity;
 import com.github.ajalt.reprint.core.AuthenticationResult;
 import com.github.ajalt.reprint.core.Reprint;
 import com.github.ajalt.reprint.rxjava2.RxReprint;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -52,6 +63,12 @@ public class MainFragment extends LifecycleFragment {
     private RecyclerView mRecyclerView;
 
     public MainFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -81,11 +98,51 @@ public class MainFragment extends LifecycleFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         testQuery();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_backup) {
+
+            AccountDatabase.getInstance(getContext())
+                    .getAccountDao()
+                    .getAllFlowable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSubscriber<List<AccountEntity>>() {
+                        @Override
+                        public void onNext(List<AccountEntity> accountEntities) {
+                            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                                    .create();
+
+                            saveFile(gson.toJson(accountEntities));
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void testQuery() {
@@ -287,6 +344,57 @@ public class MainFragment extends LifecycleFragment {
                         Toast.makeText(getContext(), "Delete Fail", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    public File getStorageDir(String folderName) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS), folderName);
+        if (!file.mkdirs()) {
+            Timber.e("FAIL TO CREATE DIR");
+        }
+        return file;
+    }
+
+    private void saveFile(String message) {
+        if (isExternalStorageWritable() && isExternalStorageReadable()) {
+
+            File file = new File(getStorageDir("apfolder"),"backup.json");
+            try {
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(message.getBytes());
+                outputStream.close();
+
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Timber.e("ERROR");
+            Toast.makeText(getContext(), "Save Fail", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

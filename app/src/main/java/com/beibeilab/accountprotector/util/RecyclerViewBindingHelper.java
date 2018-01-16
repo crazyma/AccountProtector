@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.beibeilab.accountprotector.feature.mainpage.RecyclerViewAdapter;
+import com.beibeilab.itemdeco.AccountMainListDecoration;
+import com.beibeilab.itemdeco.CustomDecoration;
 
 import java.util.List;
 
@@ -39,8 +41,10 @@ public class RecyclerViewBindingHelper {
         adapter.setMainItemModelList(items);
         recyclerView.setAdapter(adapter);
 
+
+
         recyclerView.addItemDecoration(
-        new MainRecyclerViewDecoration(recyclerView.getContext()));
+                new AccountMainListDecoration(recyclerView.getContext()));
     }
 
 
